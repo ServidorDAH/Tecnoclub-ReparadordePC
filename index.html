@@ -294,7 +294,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
         </div>
         <div>
           <h1>TecnoClub Tucumán <span class="pill">Semana 1</span></h1>
-          <p>El Taller y el Gabinete • Misión interactiva</p>
+          <p>El Taller y el Gabinete • Práctica profesionalizante</p>
         </div>
       </div>
       <div class="stats">
@@ -314,32 +314,32 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <!-- 1 BIENVENIDA -->
     <section class="step" data-step="1">
       <div class="card hero">
-        <span class="pill mono">INICIO DE MISIÓN • TALLER VIRTUAL</span>
+        <span class="pill mono">ÚLTIMO AÑO • FORMACIÓN TÉCNICO PROFESIONAL</span>
         <h2>Bienvenidos a TecnoClub Tucumán</h2>
-        <p class="lead">Hoy te convertís en ingeniero/a de rescate informático. Vas a conocer las herramientas, explorar el interior de un gabinete, desarmar con método una PC en estado crítico y diagnosticar cómo salvarla.</p>
+        <p class="lead">Esta semana trabajás como lo hace un técnico/a en un servicio técnico real: recibís un equipo con falla, abrís una orden de servicio, aplicás las normas de seguridad eléctrica y ESD, hacés el diagnóstico con método y dejás todo documentado en un reporte técnico. Es la misma rutina que te van a pedir en una pasantía o en tu primer trabajo.</p>
         <div class="feature" style="margin-bottom:16px">
-          <b style="color:var(--acc2)">🎯 Reto de la semana</b>
-          <span style="font-size:13px;color:#cbd5e1">Rescatar una PC de escritorio "clónica" que llegó al taller sin encender: aplicar el protocolo de seguridad, identificar cada componente, documentar el desarme y generar el reporte técnico.</span>
+          <b style="color:var(--acc2)">🎯 Situación problemática</b>
+          <span style="font-size:13px;color:#cbd5e1">Ingresa al taller una PC de escritorio "clónica" (armada con partes genéricas) que no enciende. Tenés que aplicar el protocolo de seguridad, identificar cada componente, documentar el desarme, proponer un diagnóstico fundamentado y entregar el reporte técnico firmado.</span>
         </div>
         <div class="grid g4">
           <div class="feature"><div class="ic">🧭</div><b>10 estaciones</b><span>Avanzá en orden o saltá con la barra de arriba.</span></div>
           <div class="feature"><div class="ic">🖼️</div><b>Todo tiene imagen</b><span>Tocá cada herramienta o componente para ver su ficha.</span></div>
-          <div class="feature"><div class="ic">🎮</div><b>Juegos y quizzes</b><span>Ganá XP y subí de rango mientras aprendés.</span></div>
-          <div class="feature"><div class="ic">📄</div><b>PDF con respuestas</b><span>Al final, tu reporte con las respuestas correctas para estudiar.</span></div>
+          <div class="feature"><div class="ic">🎮</div><b>Desafíos técnicos</b><span>Sumá XP y subí de rango a medida que demostrás lo que sabés.</span></div>
+          <div class="feature"><div class="ic">📄</div><b>Reporte en PDF</b><span>Tu reporte técnico con las respuestas correctas, para entregar y estudiar.</span></div>
         </div>
-        <p class="small muted" style="margin:14px 0 0">💾 Tu progreso se guarda en este navegador. Podés repetir la misión las veces que quieras con <b>Reiniciar misión</b> (en el último paso).</p>
-        <div class="nav"><span></span><button class="btn primary" onclick="app.go(2)">Iniciar protocolo de taller →</button></div>
+        <p class="small muted" style="margin:14px 0 0">💾 Tu progreso se guarda en este navegador. Podés repetir la práctica las veces que necesites con <b>Reiniciar práctica</b> (en el último paso).</p>
+        <div class="nav"><span></span><button class="btn primary" onclick="app.go(2)">Comenzar la práctica →</button></div>
       </div>
     </section>
 
     <!-- 2 SEGURIDAD -->
     <section class="step hidden" data-step="2">
       <div class="card">
-        <div class="head"><div><div class="kicker">ACTIVIDAD 1</div><h2>Seguridad en el taller</h2></div><span class="tag">🛡️ Obligatorio</span></div>
-        <p class="lead">Antes de tocar cualquier circuito, preparamos el puesto para evitar accidentes eléctricos y descargas electrostáticas (ESD).</p>
+        <div class="head"><div><div class="kicker">ACTIVIDAD 1</div><h2>Seguridad e higiene en el taller</h2></div><span class="tag">🛡️ Obligatorio</span></div>
+        <p class="lead">Antes de intervenir un equipo se prepara el puesto de trabajo. El objetivo es doble: proteger tu integridad física frente al riesgo eléctrico y proteger los componentes de las descargas electrostáticas (ESD), que son la causa de muchas fallas "misteriosas" en placas reparadas.</p>
         <div class="stack" id="safetyList"></div>
         <h3><span class="dot"></span>¿Mito o realidad?</h3>
-        <p class="small muted" style="margin-top:-6px">Decidí si cada afirmación es verdadera o falsa.</p>
+        <p class="small muted" style="margin-top:-6px">Muchos errores de taller vienen de creencias que circulan. Decidí si cada afirmación es correcta o no.</p>
         <div class="grid g2" id="mythList"></div>
         <div class="nav"><button class="btn" onclick="app.go(1)">← Anterior</button><button class="btn primary" onclick="app.go(3)">Siguiente: Fuente →</button></div>
       </div>
@@ -349,7 +349,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <section class="step hidden" data-step="3">
       <div class="card">
         <div class="head"><div><div class="kicker" style="color:#fcd34d">ACTIVIDAD 2</div><h2>La regla de oro de la fuente</h2></div><span class="tag warn">⚠️ Precaución alta</span></div>
-        <div class="danger-box"><b>⚡ ¡Capacitores de alta tensión!</b>La fuente de alimentación guarda voltajes peligrosos en sus capacitores internos incluso <u>después de desenchufarla</u>. Nunca se abre su carcasa metálica: se manipula solo desde sus conectores externos.</div>
+        <div class="danger-box"><b>⚡ ¡Capacitores de alta tensión!</b>La fuente conmutada (SMPS) rectifica los 220 V de la red y almacena esa tensión en capacitores electrolíticos de alto voltaje, que pueden conservar carga <u>después de desenchufarla</u>. En este taller la fuente no se abre: se diagnostica midiendo en sus conectores de salida. Su reparación interna corresponde a un técnico en electrónica con el equipamiento adecuado.</div>
 
         <h3><span class="dot"></span>Simulador: descarga de capacitores</h3>
         <div class="cap">
@@ -358,7 +358,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
             <div style="text-align:right"><span class="small muted">Tiempo simulado</span><div class="mono" id="capT" style="font-size:18px;font-weight:700">0:00</div></div>
           </div>
           <div class="capbar"><div id="capFill"></div></div>
-          <p class="small muted" id="capMsg" style="margin:0 0 10px">Los 220 V de la red, una vez rectificados, cargan el capacitor a unos 311 V. Desenchufá y mirá cómo se descarga.</p>
+          <p class="small muted" id="capMsg" style="margin:0 0 10px">Los 220 V eficaces de la red, una vez rectificados, cargan el capacitor a su valor pico: 220 × √2 ≈ 311 V. Desenchufá y observá la curva de descarga.</p>
           <button class="btn soft" id="capBtn" onclick="app.discharge()">🔌 Desenchufar y esperar 5 minutos</button>
         </div>
 
@@ -367,10 +367,10 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
         <div class="wires" id="wires"></div>
         <div class="info wiredetail" id="wireDetail"><h4>Elegí un cable</h4><p class="small muted">Cada color tiene un voltaje fijo según la norma ATX.</p></div>
 
-        <h3><span class="dot"></span>Juramento del taller</h3>
+        <h3><span class="dot"></span>Declaración de responsabilidad</h3>
         <label class="check" id="psuCheck">
           <input type="checkbox" id="psuBox" onchange="app.togglePsu(this.checked)">
-          <span><b>Comprendo y juro por el Taller:</b> desconectaré siempre el cable de alimentación, esperaré unos minutos para la descarga y manipularé la fuente únicamente desde sus conectores externos, sin abrir su chasis metálico.</span>
+          <span><b>Declaro que comprendo y aplico la norma del taller:</b> antes de intervenir un equipo desconecto el cable de alimentación, espero la descarga de los capacitores y trabajo la fuente únicamente desde sus conectores externos, sin abrir su carcasa.</span>
         </label>
         <div class="nav"><button class="btn" onclick="app.go(2)">← Anterior</button><button class="btn primary" onclick="app.go(4)">Siguiente: Herramientas →</button></div>
       </div>
@@ -380,9 +380,9 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <section class="step hidden" data-step="4">
       <div class="card">
         <div class="head"><div><div class="kicker">ACTIVIDAD 3</div><h2>Kit de herramientas del técnico</h2></div><span class="tag" id="toolsCount">🧰 0/8 vistas</span></div>
-        <p class="lead">Tocá cada herramienta para ver su ficha: para qué sirve, cómo se usa y qué precauciones tomar.</p>
+        <p class="lead">Un técnico se reconoce por cómo usa sus herramientas. Abrí cada ficha y repasá su uso correcto y las precauciones: los errores más comunes de taller vienen de usar bien la herramienta equivocada o mal la correcta.</p>
         <div class="grid g4" id="toolsGrid"></div>
-        <h3><span class="dot"></span>Mini desafío: ¿qué herramienta usarías?</h3>
+        <h3><span class="dot"></span>Desafío técnico: elegí la herramienta adecuada</h3>
         <div id="toolQuiz"></div>
         <div class="nav"><button class="btn" onclick="app.go(3)">← Anterior</button><button class="btn primary" onclick="app.go(5)">Siguiente: Gabinete →</button></div>
       </div>
@@ -392,7 +392,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <section class="step hidden" data-step="5">
       <div class="card">
         <div class="head"><div><div class="kicker">ACTIVIDAD 4</div><h2>Anatomía del gabinete</h2></div><span class="tag" id="compCount">🗺️ 0/7 vistos</span></div>
-        <p class="lead">Este es el interior de una PC con "visión de rayos X". Explorá tocando cada parte, o pasá a modo desafío y encontrá lo que te pide el taller.</p>
+        <p class="lead">Vista interna de un gabinete ATX con "visión de rayos X". Explorá cada parte para repasar su función y sus fallas típicas, o pasá al modo desafío para identificarlos sin ayuda.</p>
         <div class="casewrap">
           <div>
             <div id="caseHolder"></div>
@@ -427,33 +427,33 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
           <canvas id="sketch" width="900" height="380"></canvas>
           <p class="small muted" style="margin:8px 0 0">Se guarda solo y aparece en tu reporte PDF. Idea: usá la plantilla y marcá con colores dónde va cada cable de la fuente.</p>
         </div>
-        <div class="nav"><button class="btn" onclick="app.go(4)">← Anterior</button><button class="btn primary" onclick="app.go(6)">Siguiente: Ficha del paciente →</button></div>
+        <div class="nav"><button class="btn" onclick="app.go(4)">← Anterior</button><button class="btn primary" onclick="app.go(6)">Siguiente: Orden de servicio →</button></div>
       </div>
     </section>
 
     <!-- 6 FICHA -->
     <section class="step hidden" data-step="6">
       <div class="card">
-        <div class="head"><div><div class="kicker">ACTIVIDAD 5</div><h2>Ficha del "paciente"</h2></div><span class="tag">🩺 Historia clínica</span></div>
-        <p class="lead">Registrá los datos de la PC que llegó a tu banco de trabajo. El síntoma que elijas cambia los consejos del Mentor TecnoBot.</p>
+        <div class="head"><div><div class="kicker">ACTIVIDAD 5</div><h2>Orden de servicio técnico</h2></div><span class="tag">📄 Ingreso del equipo</span></div>
+        <p class="lead">Todo equipo que ingresa a un servicio técnico se registra con una orden de servicio: identifica el equipo, la falla que declara el cliente y quién se hace responsable. Completala; la falla que elijas cambia las orientaciones del Mentor TecnoBot.</p>
         <div class="grid g2">
           <div><label class="f">Nombre o alias del equipo</label><input class="inp" id="pName" placeholder="Ej: Fénix-X9"></div>
           <div><label class="f">Marca / modelo de gabinete</label><input class="inp" id="pBrand" placeholder="Ej: Genérico ATX"></div>
-          <div><label class="f">Síntoma principal reportado</label><select class="inp" id="pSymptom"></select></div>
+          <div><label class="f">Falla declarada por el cliente</label><select class="inp" id="pSymptom"></select></div>
           <div><label class="f">Técnico/a a cargo (tu nombre)</label><input class="inp" id="pTech" placeholder="Tu nombre o alias"></div>
-          <div><label class="f">Curso / grupo</label><input class="inp" id="pGroup" placeholder="Ej: 3° B — Grupo 2"></div>
-          <div><label class="f">Dueño del equipo (opcional)</label><input class="inp" id="pOwner" placeholder="Ej: Biblioteca de la escuela"></div>
+          <div><label class="f">Curso / división</label><input class="inp" id="pGroup" placeholder="Ej: 7° año 1ª división"></div>
+          <div><label class="f">Cliente / propietario (opcional)</label><input class="inp" id="pOwner" placeholder="Ej: Biblioteca de la escuela"></div>
         </div>
-        <div class="row" style="margin-top:14px"><button class="btn soft" onclick="app.savePatient()">💾 Guardar ficha</button><span class="small" id="pSaved" style="color:var(--acc2)"></span></div>
-        <div class="nav"><button class="btn" onclick="app.go(5)">← Anterior</button><button class="btn primary" onclick="app.go(7)">Siguiente: Check-up →</button></div>
+        <div class="row" style="margin-top:14px"><button class="btn soft" onclick="app.savePatient()">💾 Guardar orden de servicio</button><span class="small" id="pSaved" style="color:var(--acc2)"></span></div>
+        <div class="nav"><button class="btn" onclick="app.go(5)">← Anterior</button><button class="btn primary" onclick="app.go(7)">Siguiente: Inspección →</button></div>
       </div>
     </section>
 
     <!-- 7 CHECKUP -->
     <section class="step hidden" data-step="7">
       <div class="card">
-        <div class="head"><div><div class="kicker">ACTIVIDAD 6</div><h2>Check-up visual (antes de desarmar)</h2></div><span class="tag">👁️ Inspección</span></div>
-        <p class="lead">Mirá el exterior y el primer vistazo interno, sin desconectar nada todavía. Marcá solo lo que <b>realmente</b> observás. Tocá 💡 para saber qué significa cada hallazgo.</p>
+        <div class="head"><div><div class="kicker">ACTIVIDAD 6</div><h2>Inspección visual (antes de desarmar)</h2></div><span class="tag">👁️ Inspección</span></div>
+        <p class="lead">La inspección visual es el primer paso del diagnóstico y no cuesta nada: muchas fallas se resuelven acá. Revisá el exterior y el interior sin desconectar nada todavía, y registrá solo lo que <b>efectivamente</b> observás. Tocá 💡 para ver la interpretación técnica de cada hallazgo.</p>
         <div class="stack" id="visualList"></div>
         <div style="margin-top:14px"><label class="f">Otras observaciones</label><textarea class="inp" id="visualNotes" placeholder="Ej: Falta la tapa del frente, el botón de encendido está hundido..."></textarea></div>
         <div class="row" style="margin-top:12px"><button class="btn soft" onclick="app.finishVisual()">✅ Inspección completa</button><span class="small" id="visualMsg" style="color:var(--acc2)"></span></div>
@@ -471,7 +471,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
         </div>
 
         <h3><span class="dot"></span>Juego: ordená los pasos del desarme</h3>
-        <p class="small muted" style="margin-top:-6px">Usá las flechas para poner los pasos en el orden seguro y correcto. Después verificá.</p>
+        <p class="small muted" style="margin-top:-6px">Un desarme ordenado evita daños y hace posible el rearmado. Ordená los pasos según el procedimiento seguro y verificá.</p>
         <div id="orderList"></div>
         <div class="row" id="orderActions"></div>
 
@@ -481,8 +481,8 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
         </div>
         <div class="row" style="margin-top:10px"><button class="btn sm soft" onclick="app.addRow()">＋ Agregar fila</button></div>
 
-        <h3><span class="dot"></span>Plan de rescate técnico</h3>
-        <textarea class="inp" id="plan" rows="4" placeholder="Ej: Limpieza con aire comprimido, cambio de pasta térmica, medir voltajes de la fuente con el multímetro, limpiar contactos de la RAM con alcohol isopropílico y reinsertarla..."></textarea>
+        <h3><span class="dot"></span>Diagnóstico presuntivo y plan de trabajo</h3>
+        <textarea class="inp" id="plan" rows="4" placeholder="Ej: Diagnóstico presuntivo: falla de contacto en la RAM. Plan: medir tensiones de la fuente en el conector ATX, limpiar contactos de la RAM con alcohol isopropílico, probar módulo por módulo, limpieza general y cambio de pasta térmica..."></textarea>
         <div class="row" style="margin-top:8px" id="planChips"></div>
         <div class="nav"><button class="btn" onclick="app.go(7)">← Anterior</button><button class="btn primary" onclick="app.go(9)">Siguiente: Evaluación →</button></div>
       </div>
@@ -491,8 +491,8 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <!-- 9 EVALUACIÓN -->
     <section class="step hidden" data-step="9">
       <div class="card">
-        <div class="head"><div><div class="kicker">ACTIVIDAD 9</div><h2>Evaluación final del técnico</h2></div><span class="tag" id="finalCount">📝 0/10</span></div>
-        <p class="lead">10 preguntas sobre todo lo que viste. Cada respuesta muestra la explicación. Si querés practicar de nuevo, usá "Reintentar evaluación".</p>
+        <div class="head"><div><div class="kicker">ACTIVIDAD 9</div><h2>Evaluación de cierre</h2></div><span class="tag" id="finalCount">📝 0/10</span></div>
+        <p class="lead">10 preguntas integradoras sobre seguridad, componentes y diagnóstico. Cada respuesta muestra su fundamentación técnica. Para volver a practicar, usá "Reintentar evaluación".</p>
         <div id="finalQuiz"></div>
         <div class="nav"><button class="btn" onclick="app.go(8)">← Anterior</button><button class="btn primary" onclick="app.go(10)">Siguiente: Reporte →</button></div>
       </div>
@@ -501,10 +501,10 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
     <!-- 10 REPORTE -->
     <section class="step hidden" data-step="10">
       <div class="card">
-        <div class="head"><div><div class="kicker">ACTIVIDAD 10</div><h2>Check-out y reporte técnico</h2></div><span class="tag" style="color:var(--acc2)">🏁 Cierre</span></div>
+        <div class="head"><div><div class="kicker">ACTIVIDAD 10</div><h2>Cierre y reporte técnico</h2></div><span class="tag" style="color:var(--acc2)">🏁 Cierre</span></div>
         <div style="text-align:center;margin-bottom:16px">
           <div class="award">🏆</div>
-          <h3 style="justify-content:center;font-size:18px;margin:10px 0 2px" id="finalTitle">¡Operación de rescate finalizada!</h3>
+          <h3 style="justify-content:center;font-size:18px;margin:10px 0 2px" id="finalTitle">¡Práctica finalizada!</h3>
           <p class="small muted" style="margin:0" id="finalSub"></p>
         </div>
         <div class="res" id="results"></div>
@@ -514,7 +514,7 @@ footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-si
         <div class="nav">
           <button class="btn" onclick="app.go(9)">← Anterior</button>
           <div class="row">
-            <button class="btn danger" onclick="app.resetAll()">↺ Reiniciar misión</button>
+            <button class="btn danger" onclick="app.resetAll()">↺ Reiniciar práctica</button>
             <button class="btn primary" onclick="app.printReport()">🖨️ Generar PDF / Imprimir</button>
           </div>
         </div>
@@ -583,8 +583,8 @@ const SAFETY = [
 ];
 
 const MYTHS = [
- {id:'m1',text:'Si apagué la PC con el botón, ya no hay ningún riesgo eléctrico adentro.',answer:false,exp:'Mientras siga enchufada, la fuente mantiene +5 V "standby" (cable violeta) y sus capacitores siguen cargados. Siempre hay que desenchufar.'},
- {id:'m2',text:'La electricidad estática puede dañar una memoria RAM aunque no veamos chispa ni sintamos nada.',answer:true,exp:'Sentimos descargas desde unos 3.000 V, pero un chip puede dañarse con mucho menos. Por eso usamos pulsera antiestática.'},
+ {id:'m1',text:'Si la PC se apagó desde el sistema operativo, la fuente queda totalmente desenergizada.',answer:false,exp:'Mientras siga enchufada, la fuente mantiene la línea +5 VSB (cable violeta) para permitir el encendido por botón, teclado o red, y su etapa primaria sigue energizada. Siempre se desenchufa antes de intervenir.'},
+ {id:'m2',text:'Una descarga electrostática puede dañar un integrado aunque no la percibamos ni veamos chispa.',answer:true,exp:'Percibimos descargas recién desde unos 3.000 V, pero hay integrados que se degradan con unos pocos cientos de volts. El daño puede ser latente: el equipo funciona y falla semanas después.'},
  {id:'m3',text:'Para limpiar la placa madre se puede usar un trapo húmedo con agua.',answer:false,exp:'El agua conduce y provoca cortocircuitos y corrosión. Se usa aire comprimido, pincel antiestático o alcohol isopropílico.'},
  {id:'m4',text:'Antes de tocar componentes hay que descargarse tocando el metal del gabinete o usando la pulsera.',answer:true,exp:'Así igualamos nuestro potencial con el del chasis y evitamos que la descarga pase por los chips.'}
 ];
@@ -623,11 +623,11 @@ const FINAL = [
  {id:'f3',q:'Encontrás capacitores con la parte de arriba inflada en la motherboard. Eso significa que:',options:['Es normal, así vienen de fábrica','Están dañados y son sospechosos principales de la falla','Les falta pasta térmica','Hay que apretarlos con la pinza'],correct:1,exp:'Un capacitor abombado o con pérdida está dañado y causa fallas de encendido o reinicios.'},
  {id:'f4',q:'La PC enciende los coolers pero no da imagen. ¿Cuál es la primera prueba razonable?',options:['Cambiar el procesador','Formatear el disco','Sacar la RAM, limpiar sus contactos y volver a colocarla','Abrir la fuente'],correct:2,exp:'La RAM mal colocada o con contactos sucios es la causa más común de "enciende pero no da video". Además, verificá dónde está conectado el monitor.'},
  {id:'f5',q:'¿Qué conviene hacer ANTES de desconectar los cables internos?',options:['Sacarles fotos','Cortarlos con alicate','Mojarlos para limpiarlos','Nada, se reconectan como sea'],correct:0,exp:'Las fotos son tu mapa para volver a armar todo exactamente igual.'},
- {id:'f6',q:'La memoria RAM es volátil. Eso quiere decir que:',options:['Se evapora con el calor','Pierde su contenido al apagar el equipo','Es muy lenta','Guarda el sistema operativo para siempre'],correct:1,exp:'La RAM guarda datos solo mientras tiene energía; lo permanente va en el SSD o HDD.'},
+ {id:'f6',q:'Medís la línea +5 VSB (cable violeta) con la fuente enchufada y la PC apagada y obtenés 0 V. ¿Qué indica?',options:['Es normal: con la PC apagada no debe haber tensión','La etapa de standby de la fuente está fallando: la placa no recibe la orden de encendido','Falta pasta térmica en el CPU','La RAM está mal colocada'],correct:1,exp:'La línea +5 VSB debe estar presente siempre que la fuente esté enchufada; sin ella el botón de encendido no puede activar PS_ON. Es un diagnóstico típico de "no enciende nada".'},
  {id:'f7',q:'¿Para qué sirven los separadores (standoffs) entre la motherboard y el gabinete?',options:['Para decorar','Para que la placa no toque el chasis metálico y no haya cortocircuito','Para enfriar la RAM','Para conectar el monitor'],correct:1,exp:'Elevan la placa: si las soldaduras tocaran el chasis, habría un cortocircuito.'},
  {id:'f8',q:'¿Qué NO se debe hacer nunca con la fuente de alimentación?',options:['Medirla con el multímetro','Desenchufarla','Abrir su carcasa metálica','Limpiarle el polvo de la rejilla'],correct:2,exp:'Adentro hay capacitores con tensión peligrosa; solo la reparan técnicos en electrónica.'},
  {id:'f9',q:'¿Cómo se toma correctamente un módulo de RAM?',options:['Por los contactos dorados','Por los bordes, sin tocar los contactos','Con la pinza del multímetro','Por los chips negros apretando fuerte'],correct:1,exp:'La grasa de los dedos ensucia los contactos y la estática puede dañar los chips.'},
- {id:'f10',q:'Cada vez que la PC enciende, la fecha y la hora vuelven atrás. ¿Qué sospechás?',options:['Disco rígido roto','Pila CR2032 de la BIOS agotada','Falta pasta térmica','Placa de video quemada'],correct:1,exp:'La pila mantiene la hora y la configuración de la BIOS; con el multímetro debería medir cerca de 3 V.'}
+ {id:'f10',q:'Para diagnosticar con método una PC que "no da video", ¿cuál es la estrategia correcta?',options:['Cambiar todas las piezas a la vez hasta que funcione','Configuración mínima: dejar solo fuente, placa, CPU con cooler y un módulo de RAM, e ir sumando componentes','Reinstalar el sistema operativo','Actualizar el BIOS antes de revisar el hardware'],correct:1,exp:'La configuración mínima aísla la falla: si arranca, se agregan componentes de a uno hasta que aparece el culpable. Cambiar todo junto no permite saber qué falló.'}
 ];
 
 const VISUAL = [
@@ -659,7 +659,7 @@ const PLAN_CHIPS = ['Limpieza con aire comprimido','Cambio de pasta térmica','M
 
 /* ================= APP ================= */
 const KEY = 'tecnoclub_semana1_v2';
-const STEPS = ['Bienvenida','Seguridad','Fuente','Herramientas','Gabinete','Ficha','Check-up','Desarme','Evaluación','Reporte'];
+const STEPS = ['Inicio','Seguridad','Fuente','Herramientas','Gabinete','Orden de servicio','Inspección','Desarme','Evaluación','Reporte'];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const shuffle = a => { const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; };
 const compById = id => COMPS.find(c=>c.id===id);
@@ -1043,13 +1043,13 @@ const app = {
     document.getElementById('pName').value=p.name; document.getElementById('pBrand').value=p.brand;
     sel.value=p.symptom; document.getElementById('pTech').value=p.tech;
     document.getElementById('pGroup').value=p.group||''; document.getElementById('pOwner').value=p.owner||'';
-    document.getElementById('pSaved').textContent = this.s.patientSaved?'✓ Ficha guardada':'';
+    document.getElementById('pSaved').textContent = this.s.patientSaved?'✓ Orden de servicio guardada':'';
   },
   savePatient(){
     const v=id=>document.getElementById(id).value.trim();
     this.s.patient={name:v('pName'),brand:v('pBrand'),symptom:document.getElementById('pSymptom').value,tech:v('pTech'),group:v('pGroup'),owner:v('pOwner')};
     if(!this.s.patient.tech){ this.toast('Escribí tu nombre como técnico/a a cargo'); return; }
-    this.s.patientSaved=true; this.save(); this.renderPatient(); this.refresh(); this.toast('💾 Ficha guardada');
+    this.s.patientSaved=true; this.save(); this.renderPatient(); this.refresh(); this.toast('💾 Orden de servicio guardada');
   },
 
   /* ---------- Check-up ---------- */
@@ -1112,7 +1112,7 @@ const app = {
   renderResults(){
     const sc=this.scores(), ok=sc.reduce((a,b)=>a+b.ok,0), tot=sc.reduce((a,b)=>a+b.t,0), {xp,max}=this.xp(), nota=Math.round(ok/tot*100);
     document.getElementById('finalSub').textContent = `${this.rank(xp/max)} · ${xp} XP de ${max} posibles · ${nota}% de respuestas correctas`;
-    document.getElementById('finalTitle').textContent = nota>=80?'¡Operación de rescate exitosa!':nota>=50?'¡Buen trabajo, técnico/a!':'¡Misión en curso! Repasá y volvé a intentar';
+    document.getElementById('finalTitle').textContent = nota>=80?'¡Excelente desempeño, técnico/a!':nota>=50?'¡Buen trabajo! Revisá los puntos marcados':'Práctica en curso: repasá la guía y volvé a intentar';
     document.getElementById('results').innerHTML = sc.map(x=>`<div class="resc"><span>${x.n}</span><b>${x.ok}/${x.t}</b><div class="meter"><div style="width:${x.ok/x.t*100}%"></div></div></div>`).join('') + `<div class="resc" style="border-color:rgba(16,185,129,.5)"><span>Nota global</span><b style="color:var(--acc2)">${nota}%</b><div class="meter"><div style="width:${nota}%"></div></div></div>`;
   },
   reportHTML(){
@@ -1131,8 +1131,8 @@ const app = {
     const glossary=(list,kind)=>`<div class="gl">${list.map(it=>`<div class="gli"><div class="gp">${SVG[it.id]}</div><div><b>${it.name}</b><span>${kind==='tool'?it.use+' <b>Precaución:</b> '+it.warn:it.desc+' <b>Función:</b> '+it.func+'.'}</span></div></div>`).join('')}</div>`;
     return `
 <div class="rhead"><div><h1>REPORTE TÉCNICO — TECNOCLUB TUCUMÁN</h1><div>Semana 1: El Taller y el Gabinete · ${date}</div></div><div class="stamp">${esc(this.rank(xp/max)).toUpperCase()}<br>${xp} / ${max} XP</div></div>
-<h2>1. Datos del técnico y del equipo</h2>
-<div class="kv"><div><b>Técnico/a:</b> ${esc(p.tech)||'—'}</div><div><b>Curso / grupo:</b> ${esc(p.group)||'—'}</div><div><b>Equipo:</b> ${esc(p.name)||'—'}</div><div><b>Gabinete:</b> ${esc(p.brand)||'—'}</div><div><b>Síntoma:</b> ${esc(p.symptom)}</div><div><b>Dueño:</b> ${esc(p.owner)||'—'}</div></div>
+<h2>1. Orden de servicio</h2>
+<div class="kv"><div><b>Técnico/a:</b> ${esc(p.tech)||'—'}</div><div><b>Curso / división:</b> ${esc(p.group)||'—'}</div><div><b>Equipo:</b> ${esc(p.name)||'—'}</div><div><b>Gabinete:</b> ${esc(p.brand)||'—'}</div><div><b>Falla declarada:</b> ${esc(p.symptom)}</div><div><b>Cliente:</b> ${esc(p.owner)||'—'}</div></div>
 <h2>2. Resumen de resultados</h2>
 <div class="score">${sc.map(x=>`<div>${x.n}<b>${x.ok}/${x.t}</b></div>`).join('')}<div>Nota global<b>${Math.round(ok/tot*100)}%</b></div></div>
 <h2>3. Protocolo de seguridad</h2>
@@ -1142,25 +1142,25 @@ const app = {
 <table><tr><th>Color</th><th>Tensión</th><th>Uso</th></tr>${WIRES.map(w=>`<tr><td><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${w.c};border:1px solid #999;vertical-align:middle"></span> ${w.n}</td><td><b>${w.v}</b></td><td>${w.u}</td></tr>`).join('')}</table>
 <h2>6. Quiz de herramientas — respuestas correctas</h2>${qBlock(TOOL_QUIZ,s.toolQuiz)}
 <h2>7. Unir componente con su función</h2>${match}
-<h2>8. Check-up visual</h2>
+<h2>8. Inspección visual</h2>
 ${vis.length?`<table><tr><th>Hallazgo observado</th><th>Qué significa</th></tr>${vis.map(v=>`<tr><td>${v.t}</td><td>${v.w}</td></tr>`).join('')}</table>`:'<p>No se marcaron hallazgos.</p>'}
 ${s.visualNotes?`<p><b>Observaciones:</b> ${esc(s.visualNotes)}</p>`:''}
 <h2>9. Orden de desarme</h2>${order}
 <h2>10. Bitácora de desarme</h2>
 ${rows.length?`<table><tr><th style="width:50px">Paso</th><th>Componente</th><th>Hallazgo</th></tr>${rows.map(r=>`<tr><td>${esc(r.step)}</td><td>${esc(r.component)}</td><td>${esc(r.finding)}</td></tr>`).join('')}</table>`:'<p>Sin registros.</p>'}
-<p><b>Consejo del Mentor para "${esc(p.symptom)}":</b> ${SYMPTOMS[p.symptom]||''}</p>
-<h2>11. Plan de rescate</h2><p style="border:1px solid #d1d5db;border-radius:6px;padding:8px;font-style:italic">${esc(s.plan)||'Sin plan detallado.'}</p>
+<p><b>Orientación de diagnóstico para "${esc(p.symptom)}":</b> ${SYMPTOMS[p.symptom]||''}</p>
+<h2>11. Diagnóstico presuntivo y plan de trabajo</h2><p style="border:1px solid #d1d5db;border-radius:6px;padding:8px;font-style:italic">${esc(s.plan)||'Sin plan detallado.'}</p>
 ${s.canvas?`<h2>12. Esquema dibujado</h2><img class="canvasimg" src="${s.canvas}" alt="Esquema del técnico">`:''}
 <h2 class="pb">13. Evaluación final — respuestas correctas</h2>${qBlock(FINAL,s.final)}
 <h2>14. Guía de estudio: herramientas</h2>${glossary(TOOLS,'tool')}
 <h2>15. Guía de estudio: componentes</h2>${glossary(COMPS,'comp')}
-<div class="sign"><div>Firma del técnico/a</div><div>Firma del docente</div></div>
-<div class="foot">TecnoClub Tucumán — Formación técnica práctica · Reporte generado el ${date}</div>`;
+<div class="sign"><div>Firma y aclaración del alumno/a</div><div>Firma del docente / MEP</div></div>
+<div class="foot">TecnoClub Tucumán — Educación Técnico Profesional · Práctica de taller · Reporte generado el ${date}</div>`;
   },
   renderReport(){ const h=this.reportHTML(); document.getElementById('reportPreview').innerHTML=h; document.getElementById('printReport').innerHTML=h; },
   printReport(){ this.renderReport(); setTimeout(()=>window.print(),100); },
   resetAll(){
-    if(!confirm('¿Reiniciar toda la misión? Se borran tus respuestas, la ficha y el dibujo.')) return;
+    if(!confirm('¿Reiniciar toda la práctica? Se borran tus respuestas, la orden de servicio y el dibujo.')) return;
     try{ localStorage.removeItem(KEY); }catch(e){}
     location.reload();
   }
