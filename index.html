@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TecnoClub Tucumán — Semana 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f19;--card:#111827;--card2:#0f172a;--line:#1f2a3d;--text:#e5e7eb;--muted:#94a3b8;
+  --acc:#10b981;--acc2:#34d399;--accbg:rgba(16,185,129,.12);--warn:#f59e0b;--bad:#f87171;--badbg:rgba(248,113,113,.12);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+button{font:inherit;cursor:pointer;color:inherit}
+input,select,textarea{font:inherit;color:var(--text)}
+.hidden{display:none!important}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px;width:100%}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;background:rgba(11,15,25,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--accbg);border:1px solid rgba(16,185,129,.35);display:grid;place-items:center}
+.brand h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.01em}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
+.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--accbg);color:var(--acc2);border:1px solid rgba(16,185,129,.3);font-weight:600}
+.stats{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);padding:6px 12px;border-radius:12px;font-size:12px}
+.stats .xp{color:#fcd34d;font-weight:700}
+.stats .sep{width:1px;height:16px;background:var(--line)}
+.progress{height:4px;background:var(--line)}
+.progress div{height:100%;background:linear-gradient(90deg,var(--acc),#22d3ee);transition:width .5s}
+.stepper{display:flex;gap:6px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
+.stepbtn{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card2);font-size:12px;color:var(--muted);transition:.2s}
+.stepbtn:hover{color:#fff;border-color:#334155}
+.stepbtn .n{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;background:#1e293b}
+.stepbtn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.stepbtn.active .n{background:#047857}
+.stepbtn.done .n{background:var(--acc);color:#fff}
+.stepbtn.active.done .n{background:#047857}
+
+main{flex:1;padding:20px 0 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card+.card{margin-top:16px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px;flex-wrap:wrap}
+.kicker{font-size:11px;font-weight:700;color:var(--acc2);letter-spacing:.08em}
+.head h2{margin:2px 0 0;font-size:22px;letter-spacing:-.01em}
+.tag{font-size:12px;padding:4px 10px;border-radius:8px;background:var(--card2);border:1px solid var(--line);color:var(--muted)}
+.tag.warn{background:rgba(245,158,11,.12);color:#fcd34d;border-color:rgba(245,158,11,.35)}
+.lead{color:#cbd5e1;font-size:14px;margin:0 0 14px}
+h3{font-size:15px;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+
+.btn{border:1px solid var(--line);background:#1e293b;padding:10px 16px;border-radius:12px;font-size:14px;transition:.15s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:#273449}
+.btn.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+.btn.primary:hover{background:#0ea371}
+.btn.soft{background:var(--accbg);border-color:rgba(16,185,129,.35);color:var(--acc2)}
+.btn.danger{background:var(--badbg);border-color:rgba(248,113,113,.35);color:var(--bad)}
+.btn.sm{padding:6px 10px;font-size:12px;border-radius:9px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:820px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.g2,.g3{grid-template-columns:1fr}.head h2{font-size:19px}.card{padding:16px}}
+
+/* Hero */
+.hero{background:radial-gradient(circle at 85% 10%,rgba(16,185,129,.18),transparent 45%),linear-gradient(135deg,#0f172a,#111c30);border:1px solid rgba(16,185,129,.3);box-shadow:0 0 40px rgba(16,185,129,.08)}
+.hero h2{font-size:clamp(26px,4vw,38px);margin:10px 0;letter-spacing:-.02em;line-height:1.1}
+.feature{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:14px}
+.feature b{display:block;font-size:13px;margin:6px 0 2px}
+.feature span{font-size:12px;color:var(--muted)}
+.feature .ic{font-size:22px}
+
+/* Checklist */
+.check{display:flex;gap:12px;align-items:center;padding:12px 14px;background:var(--card2);border:1px solid var(--line);border-radius:12px;cursor:pointer;transition:.15s;font-size:14px}
+.check:hover{border-color:rgba(16,185,129,.5)}
+.check input{width:20px;height:20px;accent-color:var(--acc);flex:0 0 auto}
+.check.on{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.07)}
+.stack{display:flex;flex-direction:column;gap:8px}
+
+/* Myths */
+.myth{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.myth p{margin:0 0 10px;font-size:14px}
+.myth .fb{margin-top:10px}
+
+/* Quiz */
+.q{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.q.ok{border-color:rgba(16,185,129,.5)}
+.q.bad{border-color:rgba(248,113,113,.45)}
+.q-head{display:flex;gap:10px;align-items:flex-start}
+.q-num{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:#1e293b;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--acc2)}
+.q-head p{margin:2px 0 0;font-weight:600;font-size:14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+@media (max-width:600px){.opts{grid-template-columns:1fr}}
+.opt{text-align:left;background:#131c2e;border:1px solid var(--line);padding:10px 12px;border-radius:10px;font-size:13px;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--acc);background:#16233a}
+.opt b{color:var(--acc2);margin-right:6px;font-family:'JetBrains Mono',monospace}
+.opt.correct{border-color:var(--acc);background:rgba(16,185,129,.15)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt.dim{opacity:.5}
+.opt:disabled{cursor:default}
+.fb{margin-top:10px;font-size:13px;padding:10px 12px;border-radius:10px}
+.fb.ok{background:rgba(16,185,129,.1);color:#a7f3d0}
+.fb.bad{background:var(--badbg);color:#fecaca}
+.hint{font-size:12px;color:#fcd34d;margin-top:8px}
+.scorebar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:var(--card2);border:1px dashed #334155;border-radius:12px;padding:10px 14px;font-size:13px}
+
+/* Item cards with images */
+.item{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:10px;cursor:pointer;transition:.2s;text-align:left;display:flex;flex-direction:column;gap:6px;position:relative}
+.item:hover{border-color:rgba(16,185,129,.6);transform:translateY(-2px)}
+.item .pic{background:radial-gradient(circle,#18243a,#0b1220);border-radius:10px;aspect-ratio:4/3;display:grid;place-items:center;padding:8px}
+.item .pic svg{width:100%;height:100%}
+.item b{font-size:13px}
+.item span{font-size:11px;color:var(--muted)}
+.item .seen{position:absolute;top:8px;right:8px;background:var(--acc);color:#fff;font-size:10px;padding:2px 7px;border-radius:999px;font-weight:700}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(2,6,15,.75);z-index:80;display:grid;place-items:center;padding:16px;backdrop-filter:blur(4px)}
+.modal-box{background:var(--card);border:1px solid rgba(16,185,129,.35);border-radius:18px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:20px;position:relative;animation:pop .2s ease}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:none;opacity:1}}
+.x{position:absolute;top:10px;right:12px;background:#1e293b;border:1px solid var(--line);width:34px;height:34px;border-radius:10px;font-size:18px}
+.bigpic{background:radial-gradient(circle,#1a2942,#0b1220);border-radius:14px;padding:16px;display:grid;place-items:center;margin:8px 0 14px}
+.bigpic svg{width:min(320px,100%);height:auto}
+.info{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;font-size:14px}
+.info h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--acc2)}
+.info.w h4{color:#fcd34d}
+.info.w{border-color:rgba(245,158,11,.3)}
+.info p{margin:0}
+
+/* Fan spin */
+.fan{transform-box:fill-box;transform-origin:center;animation:spin 1.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PSU */
+.danger-box{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.35);border-radius:14px;padding:14px;color:#fde68a;font-size:14px}
+.danger-box b{display:block;margin-bottom:4px}
+.cap{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+.capbar{height:22px;background:#1e293b;border-radius:999px;overflow:hidden;margin:10px 0}
+.capbar div{height:100%;width:100%;background:linear-gradient(90deg,#ef4444,#f59e0b);transition:width .1s linear}
+.capbar div.safe{background:var(--acc)}
+.bigv{font-size:30px;font-weight:800}
+.wires{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.wire{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px}
+.wire:hover{border-color:#475569}
+.wire.on{border-color:var(--acc)}
+.wire i{display:block;width:100%;height:10px;border-radius:999px;border:1px solid #475569}
+.wiredetail{margin-top:10px}
+
+/* Case */
+.casewrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.casewrap{grid-template-columns:1fr}}
+.casesvg{width:100%;height:auto;background:#070b14;border-radius:14px;border:1px solid var(--line)}
+.hot{cursor:pointer;transition:filter .2s}
+.hot:hover{filter:brightness(1.35) drop-shadow(0 0 6px #10b981)}
+.hot.found{filter:drop-shadow(0 0 8px #10b981)}
+.hot.wrongflash{animation:wf .5s}
+@keyframes wf{0%,100%{filter:none}50%{filter:drop-shadow(0 0 10px #ef4444) brightness(1.4)}}
+.lbl{font-size:12px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#000;stroke-width:3px;pointer-events:none;display:none}
+.show-labels .lbl{display:block}
+.seg{display:inline-flex;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{border:0;background:transparent;padding:7px 12px;border-radius:9px;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--acc);color:#fff}
+.target{background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(34,211,238,.1));border:1px solid rgba(16,185,129,.4);border-radius:14px;padding:14px;font-size:14px}
+.target .big{font-size:20px;font-weight:800;color:#fff}
+
+/* Matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.match{grid-template-columns:1fr}}
+.mbtn{width:100%;text-align:left;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:center;margin-bottom:8px;transition:.15s}
+.mbtn:hover:not(:disabled){border-color:#475569}
+.mbtn.pick{border-color:#22d3ee;box-shadow:0 0 0 2px rgba(34,211,238,.25)}
+.mbtn.ok{border-color:var(--acc);background:rgba(16,185,129,.1)}
+.mbtn.bad{border-color:var(--bad);background:var(--badbg)}
+.mbtn .let{flex:0 0 auto;width:24px;height:24px;border-radius:7px;background:#1e293b;display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;color:var(--acc2)}
+.mbtn .let.empty{color:#475569}
+.mbtn svg{width:42px;height:32px;flex:0 0 auto}
+.mbtn small{display:block;color:var(--muted);font-size:11px}
+
+/* Order */
+.ord{display:flex;align-items:center;gap:10px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:14px}
+.ord .num{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:#1e293b;display:grid;place-items:center;font-weight:700;font-size:13px}
+.ord .txt{flex:1}
+.ord.ok{border-color:var(--acc)}
+.ord.ok .num{background:var(--acc);color:#fff}
+.ord.bad{border-color:var(--bad)}
+.ord.bad .num{background:var(--bad);color:#fff}
+.ord .arrows{display:flex;gap:4px}
+.ord .arrows button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#1e293b}
+.ord .should{font-size:11px;color:#fecaca}
+
+/* Form */
+label.f{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.inp{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;outline:none}
+.inp:focus{border-color:var(--acc)}
+textarea.inp{resize:vertical;min-height:90px}
+table.log{width:100%;border-collapse:collapse;font-size:13px}
+table.log th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px;border-bottom:1px solid var(--line)}
+table.log td{padding:6px;border-bottom:1px solid var(--line)}
+table.log input{width:100%;background:#0b1220;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;outline:none}
+table.log input:focus{border-color:var(--acc)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+
+.mentor{display:flex;gap:12px;background:var(--card2);border:1px solid rgba(16,185,129,.35);border-radius:14px;padding:14px}
+.mentor .bot{flex:0 0 auto;width:44px;height:44px;border-radius:12px;background:var(--accbg);display:grid;place-items:center;font-size:22px}
+.mentor h4{margin:0;font-size:12px;letter-spacing:.08em;color:var(--acc2)}
+.mentor p{margin:4px 0 6px;font-size:14px}
+
+/* Canvas */
+.canvasbox{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}
+#sketch{width:100%;height:auto;aspect-ratio:900/380;background:#070a12;border-radius:10px;border:1px solid var(--line);touch-action:none;cursor:crosshair;display:block}
+.swatch{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer}
+.swatch.on{border-color:#fff}
+
+/* Results */
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.resc{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.resc span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.resc b{display:block;font-size:20px}
+.meter{height:6px;background:#1e293b;border-radius:999px;overflow:hidden;margin-top:6px}
+.meter div{height:100%;background:var(--acc)}
+.award{width:72px;height:72px;border-radius:50%;margin:0 auto;background:var(--accbg);border:1px solid rgba(16,185,129,.4);display:grid;place-items:center;font-size:34px;box-shadow:0 0 30px rgba(16,185,129,.2)}
+
+/* Toast */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);background:#052e22;border:1px solid var(--acc);color:#d1fae5;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;z-index:90;transition:transform .3s;max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.confetti{position:fixed;top:-10px;width:8px;height:14px;z-index:95;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+
+footer{border-top:1px solid var(--line);padding:16px 0;text-align:center;font-size:12px;color:#64748b}
+
+/* ===== Report (screen preview + print) ===== */
+.paper{background:#fff;color:#111827;border-radius:12px;padding:28px;max-height:560px;overflow:auto;border:1px solid var(--line)}
+.rep{font-size:12px;line-height:1.45;color:#111827}
+.rep h1{font-size:18px;margin:0}
+.rep h2{font-size:14px;margin:18px 0 8px;padding-bottom:4px;border-bottom:2px solid #10b981;color:#064e3b}
+.rep .rhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:3px solid #064e3b;padding-bottom:10px}
+.rep .stamp{border:2px solid #059669;color:#059669;font-weight:800;padding:4px 10px;border-radius:6px;font-size:11px;text-align:center}
+.rep table{width:100%;border-collapse:collapse;margin:4px 0}
+.rep td,.rep th{border:1px solid #d1d5db;padding:5px 7px;text-align:left;vertical-align:top}
+.rep th{background:#ecfdf5;font-size:11px}
+.rep .rq{border:1px solid #e5e7eb;border-left:4px solid #9ca3af;border-radius:6px;padding:8px 10px;margin-bottom:7px;break-inside:avoid}
+.rep .rq.ok{border-left-color:#059669}
+.rep .rq.bad{border-left-color:#dc2626}
+.rep .rq .qq{font-weight:700;margin-bottom:3px}
+.rep .you{color:#374151}
+.rep .good{color:#047857;font-weight:600}
+.rep .no{color:#b91c1c;font-weight:600}
+.rep .exp{color:#4b5563;font-style:italic;margin-top:2px}
+.rep .kv{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+.rep .gl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rep .gli{display:flex;gap:8px;border:1px solid #e5e7eb;border-radius:6px;padding:6px;break-inside:avoid}
+.rep .gli .gp{flex:0 0 70px;height:52px;background:#0f172a;border-radius:5px;padding:3px}
+.rep .gli .gp svg{width:100%;height:100%}
+.rep .gli b{display:block;font-size:12px}
+.rep .gli span{font-size:10.5px;color:#374151}
+.rep .canvasimg{max-width:100%;border-radius:6px;border:1px solid #d1d5db}
+.rep .foot{margin-top:18px;border-top:1px solid #d1d5db;padding-top:8px;text-align:center;color:#6b7280;font-size:10px}
+.rep .sign{display:flex;justify-content:space-around;margin-top:30px;gap:20px}
+.rep .sign div{border-top:1px solid #6b7280;width:200px;text-align:center;padding-top:4px;font-size:10px;color:#6b7280}
+.rep .score{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.rep .score div{border:1px solid #d1fae5;background:#f0fdf4;border-radius:6px;padding:6px;text-align:center}
+.rep .score b{display:block;font-size:15px;color:#064e3b}
+.rep .pb{break-before:page}
+#printReport{display:none}
+
+@media print{
+  @page{size:A4;margin:12mm}
+  html,body{background:#fff!important;color:#111!important}
+  header,main,footer,#toast,#modal,.confetti{display:none!important}
+  #printReport{display:block!important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+        </div>
+        <div>
+          <h1>TecnoClub Tucumán <span class="pill">Semana 1</span></h1>
+          <p>El Taller y el Gabinete • Misión interactiva</p>
+        </div>
+      </div>
+      <div class="stats">
+        <span>⭐ <span class="xp mono" id="xp">0 XP</span></span>
+        <span class="sep"></span>
+        <span>🛡️ <b id="rank">Novato de Taller</b></span>
+      </div>
+    </div>
+  </div>
+  <div class="progress"><div id="progressBar" style="width:0%"></div></div>
+  <div class="wrap"><nav class="stepper" id="stepper"></nav></div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- 1 BIENVENIDA -->
+    <section class="step" data-step="1">
+      <div class="card hero">
+        <span class="pill mono">INICIO DE MISIÓN • TALLER VIRTUAL</span>
+        <h2>Bienvenidos a TecnoClub Tucumán</h2>
+        <p class="lead">Hoy te convertís en ingeniero/a de rescate informático. Vas a conocer las herramientas, explorar el interior de un gabinete, desarmar con método una PC en estado crítico y diagnosticar cómo salvarla.</p>
+        <div class="feature" style="margin-bottom:16px">
+          <b style="color:var(--acc2)">🎯 Reto de la semana</b>
+          <span style="font-size:13px;color:#cbd5e1">Rescatar una PC de escritorio "clónica" que llegó al taller sin encender: aplicar el protocolo de seguridad, identificar cada componente, documentar el desarme y generar el reporte técnico.</span>
+        </div>
+        <div class="grid g4">
+          <div class="feature"><div class="ic">🧭</div><b>10 estaciones</b><span>Avanzá en orden o saltá con la barra de arriba.</span></div>
+          <div class="feature"><div class="ic">🖼️</div><b>Todo tiene imagen</b><span>Tocá cada herramienta o componente para ver su ficha.</span></div>
+          <div class="feature"><div class="ic">🎮</div><b>Juegos y quizzes</b><span>Ganá XP y subí de rango mientras aprendés.</span></div>
+          <div class="feature"><div class="ic">📄</div><b>PDF con respuestas</b><span>Al final, tu reporte con las respuestas correctas para estudiar.</span></div>
+        </div>
+        <p class="small muted" style="margin:14px 0 0">💾 Tu progreso se guarda en este navegador. Podés repetir la misión las veces que quieras con <b>Reiniciar misión</b> (en el último paso).</p>
+        <div class="nav"><span></span><button class="btn primary" onclick="app.go(2)">Iniciar protocolo de taller →</button></div>
+      </div>
+    </section>
+
+    <!-- 2 SEGURIDAD -->
+    <section class="step hidden" data-step="2">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 1</div><h2>Seguridad en el taller</h2></div><span class="tag">🛡️ Obligatorio</span></div>
+        <p class="lead">Antes de tocar cualquier circuito, preparamos el puesto para evitar accidentes eléctricos y descargas electrostáticas (ESD).</p>
+        <div class="stack" id="safetyList"></div>
+        <h3><span class="dot"></span>¿Mito o realidad?</h3>
+        <p class="small muted" style="margin-top:-6px">Decidí si cada afirmación es verdadera o falsa.</p>
+        <div class="grid g2" id="mythList"></div>
+        <div class="nav"><button class="btn" onclick="app.go(1)">← Anterior</button><button class="btn primary" onclick="app.go(3)">Siguiente: Fuente →</button></div>
+      </div>
+    </section>
+
+    <!-- 3 FUENTE -->
+    <section class="step hidden" data-step="3">
+      <div class="card">
+        <div class="head"><div><div class="kicker" style="color:#fcd34d">ACTIVIDAD 2</div><h2>La regla de oro de la fuente</h2></div><span class="tag warn">⚠️ Precaución alta</span></div>
+        <div class="danger-box"><b>⚡ ¡Capacitores de alta tensión!</b>La fuente de alimentación guarda voltajes peligrosos en sus capacitores internos incluso <u>después de desenchufarla</u>. Nunca se abre su carcasa metálica: se manipula solo desde sus conectores externos.</div>
+
+        <h3><span class="dot"></span>Simulador: descarga de capacitores</h3>
+        <div class="cap">
+          <div class="row" style="justify-content:space-between">
+            <div><span class="small muted">Tensión en el capacitor principal</span><div class="bigv mono" id="capV">311 V</div></div>
+            <div style="text-align:right"><span class="small muted">Tiempo simulado</span><div class="mono" id="capT" style="font-size:18px;font-weight:700">0:00</div></div>
+          </div>
+          <div class="capbar"><div id="capFill"></div></div>
+          <p class="small muted" id="capMsg" style="margin:0 0 10px">Los 220 V de la red, una vez rectificados, cargan el capacitor a unos 311 V. Desenchufá y mirá cómo se descarga.</p>
+          <button class="btn soft" id="capBtn" onclick="app.discharge()">🔌 Desenchufar y esperar 5 minutos</button>
+        </div>
+
+        <h3><span class="dot"></span>Colores de los cables de la fuente (ATX)</h3>
+        <p class="small muted" style="margin-top:-6px">Tocá cada color para saber qué tensión lleva.</p>
+        <div class="wires" id="wires"></div>
+        <div class="info wiredetail" id="wireDetail"><h4>Elegí un cable</h4><p class="small muted">Cada color tiene un voltaje fijo según la norma ATX.</p></div>
+
+        <h3><span class="dot"></span>Juramento del taller</h3>
+        <label class="check" id="psuCheck">
+          <input type="checkbox" id="psuBox" onchange="app.togglePsu(this.checked)">
+          <span><b>Comprendo y juro por el Taller:</b> desconectaré siempre el cable de alimentación, esperaré unos minutos para la descarga y manipularé la fuente únicamente desde sus conectores externos, sin abrir su chasis metálico.</span>
+        </label>
+        <div class="nav"><button class="btn" onclick="app.go(2)">← Anterior</button><button class="btn primary" onclick="app.go(4)">Siguiente: Herramientas →</button></div>
+      </div>
+    </section>
+
+    <!-- 4 HERRAMIENTAS -->
+    <section class="step hidden" data-step="4">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 3</div><h2>Kit de herramientas del técnico</h2></div><span class="tag" id="toolsCount">🧰 0/8 vistas</span></div>
+        <p class="lead">Tocá cada herramienta para ver su ficha: para qué sirve, cómo se usa y qué precauciones tomar.</p>
+        <div class="grid g4" id="toolsGrid"></div>
+        <h3><span class="dot"></span>Mini desafío: ¿qué herramienta usarías?</h3>
+        <div id="toolQuiz"></div>
+        <div class="nav"><button class="btn" onclick="app.go(3)">← Anterior</button><button class="btn primary" onclick="app.go(5)">Siguiente: Gabinete →</button></div>
+      </div>
+    </section>
+
+    <!-- 5 GABINETE -->
+    <section class="step hidden" data-step="5">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 4</div><h2>Anatomía del gabinete</h2></div><span class="tag" id="compCount">🗺️ 0/7 vistos</span></div>
+        <p class="lead">Este es el interior de una PC con "visión de rayos X". Explorá tocando cada parte, o pasá a modo desafío y encontrá lo que te pide el taller.</p>
+        <div class="casewrap">
+          <div>
+            <div id="caseHolder"></div>
+            <label class="row small muted" style="margin-top:8px;gap:6px;cursor:pointer"><input type="checkbox" id="lblToggle" onchange="app.toggleLabels(this.checked)" style="accent-color:var(--acc)"> Mostrar nombres</label>
+          </div>
+          <div class="stack" style="gap:12px">
+            <div class="seg"><button id="modeExplore" onclick="app.setMode('explore')">🔍 Explorar</button><button id="modeFind" onclick="app.setMode('find')">🎯 Desafío: encontrá</button></div>
+            <div id="modePanel"></div>
+          </div>
+        </div>
+
+        <h3><span class="dot"></span>Fichas de componentes</h3>
+        <div class="grid g4" id="compGrid"></div>
+
+        <h3><span class="dot"></span>Juego: uní cada componente con su función</h3>
+        <p class="small muted" style="margin-top:-6px">1) Tocá un componente a la izquierda. 2) Tocá su función a la derecha. Cuando estén todas, verificá.</p>
+        <div class="match"><div id="matchLeft"></div><div id="matchRight"></div></div>
+        <div class="row" id="matchActions"></div>
+
+        <h3><span class="dot"></span>Lienzo técnico: dibujá tu esquema</h3>
+        <div class="canvasbox">
+          <div class="row" style="justify-content:space-between;margin-bottom:10px">
+            <div class="row" id="swatches" style="gap:6px"></div>
+            <div class="row" style="gap:6px">
+              <select id="brush" class="inp" style="width:auto;padding:6px 8px;font-size:12px"><option value="2">Fino</option><option value="5" selected>Normal</option><option value="10">Grueso</option></select>
+              <button class="btn sm" onclick="app.setEraser()" id="eraserBtn">🧽 Goma</button>
+              <button class="btn sm" onclick="app.undo()">↶ Deshacer</button>
+              <button class="btn sm soft" onclick="app.drawTemplate()">📐 Plantilla guía</button>
+              <button class="btn sm danger" onclick="app.clearCanvas()">Limpiar</button>
+            </div>
+          </div>
+          <canvas id="sketch" width="900" height="380"></canvas>
+          <p class="small muted" style="margin:8px 0 0">Se guarda solo y aparece en tu reporte PDF. Idea: usá la plantilla y marcá con colores dónde va cada cable de la fuente.</p>
+        </div>
+        <div class="nav"><button class="btn" onclick="app.go(4)">← Anterior</button><button class="btn primary" onclick="app.go(6)">Siguiente: Ficha del paciente →</button></div>
+      </div>
+    </section>
+
+    <!-- 6 FICHA -->
+    <section class="step hidden" data-step="6">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 5</div><h2>Ficha del "paciente"</h2></div><span class="tag">🩺 Historia clínica</span></div>
+        <p class="lead">Registrá los datos de la PC que llegó a tu banco de trabajo. El síntoma que elijas cambia los consejos del Mentor TecnoBot.</p>
+        <div class="grid g2">
+          <div><label class="f">Nombre o alias del equipo</label><input class="inp" id="pName" placeholder="Ej: Fénix-X9"></div>
+          <div><label class="f">Marca / modelo de gabinete</label><input class="inp" id="pBrand" placeholder="Ej: Genérico ATX"></div>
+          <div><label class="f">Síntoma principal reportado</label><select class="inp" id="pSymptom"></select></div>
+          <div><label class="f">Técnico/a a cargo (tu nombre)</label><input class="inp" id="pTech" placeholder="Tu nombre o alias"></div>
+          <div><label class="f">Curso / grupo</label><input class="inp" id="pGroup" placeholder="Ej: 3° B — Grupo 2"></div>
+          <div><label class="f">Dueño del equipo (opcional)</label><input class="inp" id="pOwner" placeholder="Ej: Biblioteca de la escuela"></div>
+        </div>
+        <div class="row" style="margin-top:14px"><button class="btn soft" onclick="app.savePatient()">💾 Guardar ficha</button><span class="small" id="pSaved" style="color:var(--acc2)"></span></div>
+        <div class="nav"><button class="btn" onclick="app.go(5)">← Anterior</button><button class="btn primary" onclick="app.go(7)">Siguiente: Check-up →</button></div>
+      </div>
+    </section>
+
+    <!-- 7 CHECKUP -->
+    <section class="step hidden" data-step="7">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 6</div><h2>Check-up visual (antes de desarmar)</h2></div><span class="tag">👁️ Inspección</span></div>
+        <p class="lead">Mirá el exterior y el primer vistazo interno, sin desconectar nada todavía. Marcá solo lo que <b>realmente</b> observás. Tocá 💡 para saber qué significa cada hallazgo.</p>
+        <div class="stack" id="visualList"></div>
+        <div style="margin-top:14px"><label class="f">Otras observaciones</label><textarea class="inp" id="visualNotes" placeholder="Ej: Falta la tapa del frente, el botón de encendido está hundido..."></textarea></div>
+        <div class="row" style="margin-top:12px"><button class="btn soft" onclick="app.finishVisual()">✅ Inspección completa</button><span class="small" id="visualMsg" style="color:var(--acc2)"></span></div>
+        <div class="nav"><button class="btn" onclick="app.go(6)">← Anterior</button><button class="btn primary" onclick="app.go(8)">Siguiente: Desarme →</button></div>
+      </div>
+    </section>
+
+    <!-- 8 DESARME -->
+    <section class="step hidden" data-step="8">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 7 Y 8</div><h2>Desarme, diagnóstico y plan</h2></div><span class="tag">📋 Bitácora</span></div>
+        <div class="mentor">
+          <div class="bot">🤖</div>
+          <div><h4>MENTOR TECNOBOT</h4><p id="mentorTxt"></p><button class="btn sm soft" onclick="app.nextAdvice()">Pedir otro consejo</button></div>
+        </div>
+
+        <h3><span class="dot"></span>Juego: ordená los pasos del desarme</h3>
+        <p class="small muted" style="margin-top:-6px">Usá las flechas para poner los pasos en el orden seguro y correcto. Después verificá.</p>
+        <div id="orderList"></div>
+        <div class="row" id="orderActions"></div>
+
+        <h3><span class="dot"></span>Bitácora de desarme y hallazgos</h3>
+        <div class="tablewrap">
+          <table class="log"><thead><tr><th style="width:60px">Paso</th><th>Componente</th><th>Estado / hallazgo</th><th style="width:44px"></th></tr></thead><tbody id="logBody"></tbody></table>
+        </div>
+        <div class="row" style="margin-top:10px"><button class="btn sm soft" onclick="app.addRow()">＋ Agregar fila</button></div>
+
+        <h3><span class="dot"></span>Plan de rescate técnico</h3>
+        <textarea class="inp" id="plan" rows="4" placeholder="Ej: Limpieza con aire comprimido, cambio de pasta térmica, medir voltajes de la fuente con el multímetro, limpiar contactos de la RAM con alcohol isopropílico y reinsertarla..."></textarea>
+        <div class="row" style="margin-top:8px" id="planChips"></div>
+        <div class="nav"><button class="btn" onclick="app.go(7)">← Anterior</button><button class="btn primary" onclick="app.go(9)">Siguiente: Evaluación →</button></div>
+      </div>
+    </section>
+
+    <!-- 9 EVALUACIÓN -->
+    <section class="step hidden" data-step="9">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 9</div><h2>Evaluación final del técnico</h2></div><span class="tag" id="finalCount">📝 0/10</span></div>
+        <p class="lead">10 preguntas sobre todo lo que viste. Cada respuesta muestra la explicación. Si querés practicar de nuevo, usá "Reintentar evaluación".</p>
+        <div id="finalQuiz"></div>
+        <div class="nav"><button class="btn" onclick="app.go(8)">← Anterior</button><button class="btn primary" onclick="app.go(10)">Siguiente: Reporte →</button></div>
+      </div>
+    </section>
+
+    <!-- 10 REPORTE -->
+    <section class="step hidden" data-step="10">
+      <div class="card">
+        <div class="head"><div><div class="kicker">ACTIVIDAD 10</div><h2>Check-out y reporte técnico</h2></div><span class="tag" style="color:var(--acc2)">🏁 Cierre</span></div>
+        <div style="text-align:center;margin-bottom:16px">
+          <div class="award">🏆</div>
+          <h3 style="justify-content:center;font-size:18px;margin:10px 0 2px" id="finalTitle">¡Operación de rescate finalizada!</h3>
+          <p class="small muted" style="margin:0" id="finalSub"></p>
+        </div>
+        <div class="res" id="results"></div>
+        <h3><span class="dot"></span>Vista previa del reporte</h3>
+        <p class="small muted" style="margin-top:-6px">Incluye tus respuestas, las <b>respuestas correctas</b> con explicación y una guía de estudio con todas las imágenes. En la ventana de impresión elegí <b>"Guardar como PDF"</b>.</p>
+        <div class="paper"><div class="rep" id="reportPreview"></div></div>
+        <div class="nav">
+          <button class="btn" onclick="app.go(9)">← Anterior</button>
+          <div class="row">
+            <button class="btn danger" onclick="app.resetAll()">↺ Reiniciar misión</button>
+            <button class="btn primary" onclick="app.printReport()">🖨️ Generar PDF / Imprimir</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer><div class="wrap">TecnoClub Tucumán © 2026 — Semana 1: El Taller y el Gabinete</div></footer>
+
+<div id="printReport" class="rep"></div>
+<div id="modal" class="modal hidden" onclick="if(event.target===this)app.closeModal()"><div class="modal-box"><button class="x" onclick="app.closeModal()" aria-label="Cerrar">×</button><div id="modalBody"></div></div></div>
+<div id="toast"></div>
+
+<script>
+/* ================= ILUSTRACIONES ================= */
+const SVG = {
+ph2:`<svg viewBox="0 0 120 90"><rect x="6" y="33" width="46" height="24" rx="10" fill="#f59e0b"/><rect x="13" y="38" width="4" height="14" rx="2" fill="#b45309"/><rect x="23" y="38" width="4" height="14" rx="2" fill="#b45309"/><rect x="33" y="38" width="4" height="14" rx="2" fill="#b45309"/><rect x="52" y="39" width="10" height="12" rx="2" fill="#334155"/><rect x="62" y="42" width="40" height="6" fill="#cbd5e1"/><path d="M102 40 L115 45 L102 50 Z" fill="#94a3b8"/><path d="M104 45h9M108.5 41v8" stroke="#475569" stroke-width="1.5"/></svg>`,
+pulsera:`<svg viewBox="0 0 120 90"><ellipse cx="32" cy="45" rx="20" ry="26" fill="none" stroke="#3b82f6" stroke-width="9"/><ellipse cx="32" cy="45" rx="20" ry="26" fill="none" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="3 4"/><rect x="47" y="38" width="14" height="14" rx="3" fill="#cbd5e1"/><path d="M61 45 C80 45 74 18 92 20 S108 50 98 62" fill="none" stroke="#ef4444" stroke-width="3"/><path d="M92 60 l18 12 l3 -5 l-16 -12z" fill="#94a3b8"/><path d="M95 66 l14 8" stroke="#475569" stroke-width="2"/><text x="82" y="86" font-size="8" fill="#94a3b8" font-family="sans-serif">al chasis</text></svg>`,
+multimetro:`<svg viewBox="0 0 120 90"><path d="M44 78 C40 90 14 88 12 64" stroke="#64748b" stroke-width="3" fill="none"/><path d="M64 78 C68 90 100 88 106 62" stroke="#ef4444" stroke-width="3" fill="none"/><path d="M12 64 l-2 -22" stroke="#64748b" stroke-width="5" stroke-linecap="round"/><path d="M106 62 l2 -22" stroke="#ef4444" stroke-width="5" stroke-linecap="round"/><rect x="32" y="4" width="44" height="80" rx="8" fill="#facc15"/><rect x="37" y="10" width="34" height="18" rx="2" fill="#1e293b"/><text x="54" y="23.5" font-size="10" text-anchor="middle" fill="#4ade80" font-family="monospace" font-weight="700">12.0</text><circle cx="54" cy="48" r="12" fill="#1f2937"/><rect x="52" y="37" width="4" height="11" rx="1" fill="#e5e7eb"/><text x="54" y="66" font-size="7" text-anchor="middle" fill="#1f2937" font-family="sans-serif" font-weight="700">V⎓  Ω  A</text><circle cx="44" cy="76" r="3.5" fill="#111"/><circle cx="64" cy="76" r="3.5" fill="#ef4444"/></svg>`,
+aire:`<svg viewBox="0 0 120 90"><rect x="34" y="28" width="32" height="58" rx="7" fill="#3b82f6"/><rect x="34" y="44" width="32" height="18" fill="#e2e8f0"/><text x="50" y="56" font-size="8" text-anchor="middle" fill="#1e3a8a" font-weight="800" font-family="sans-serif">AIRE</text><rect x="40" y="18" width="20" height="10" rx="2" fill="#94a3b8"/><rect x="47" y="11" width="14" height="8" rx="1" fill="#475569"/><rect x="61" y="13" width="32" height="3" fill="#ef4444"/><circle cx="100" cy="14" r="4" fill="#e2e8f0" opacity=".8"/><circle cx="110" cy="8" r="5" fill="#e2e8f0" opacity=".55"/><circle cx="110" cy="21" r="3.5" fill="#e2e8f0" opacity=".5"/></svg>`,
+pasta:`<svg viewBox="0 0 120 90"><rect x="5" y="31" width="7" height="28" rx="2" fill="#64748b"/><rect x="12" y="42" width="12" height="6" fill="#64748b"/><rect x="22" y="35" width="58" height="20" rx="4" fill="#e2e8f0"/><rect x="26" y="38" width="40" height="14" fill="#9ca3af"/><path d="M30 38v14M38 38v14M46 38v14M54 38v14" stroke="#e5e7eb" stroke-width="1"/><rect x="80" y="39" width="12" height="12" fill="#cbd5e1"/><path d="M92 41 L108 45 L92 49Z" fill="#94a3b8"/><circle cx="113" cy="45" r="4" fill="#d1d5db"/><text x="45" y="76" font-size="8" fill="#94a3b8" font-family="sans-serif">tamaño arveja →</text></svg>`,
+precintos:`<svg viewBox="0 0 120 90"><path d="M18 66 Q60 0 102 66" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/><path d="M18 78 Q60 18 102 78" fill="none" stroke="#10b981" stroke-width="6" stroke-linecap="round"/><rect x="10" y="60" width="15" height="12" rx="2" fill="#cbd5e1"/><rect x="10" y="72" width="15" height="12" rx="2" fill="#059669"/><path d="M28 50h64" stroke="#facc15" stroke-width="4"/><path d="M28 56h64" stroke="#ef4444" stroke-width="4"/><path d="M28 62h64" stroke="#64748b" stroke-width="4"/><rect x="56" y="46" width="8" height="20" rx="2" fill="#f8fafc"/></svg>`,
+alcohol:`<svg viewBox="0 0 120 90"><rect x="40" y="24" width="44" height="62" rx="9" fill="#e0f2fe"/><rect x="40" y="44" width="44" height="26" fill="#0ea5e9"/><text x="62" y="56" font-size="10" text-anchor="middle" fill="#fff" font-weight="800" font-family="sans-serif">IPA</text><text x="62" y="66" font-size="8" text-anchor="middle" fill="#fff" font-family="sans-serif">99%</text><rect x="52" y="12" width="20" height="12" rx="2" fill="#1d4ed8"/><path d="M8 78 L30 64" stroke="#f1f5f9" stroke-width="3"/><ellipse cx="7" cy="79" rx="5" ry="4" fill="#f8fafc"/><ellipse cx="31" cy="63" rx="5" ry="4" fill="#f8fafc"/></svg>`,
+linterna:`<svg viewBox="0 0 120 90"><path d="M68 30 L118 8 L118 82 L68 60Z" fill="#fde68a" opacity=".35"/><rect x="8" y="34" width="46" height="22" rx="5" fill="#475569"/><path d="M54 30 L68 26 L68 64 L54 60Z" fill="#94a3b8"/><rect x="24" y="29" width="12" height="6" rx="2" fill="#ef4444"/><path d="M14 40v10M19 40v10" stroke="#334155" stroke-width="2"/></svg>`,
+
+motherboard:`<svg viewBox="0 0 120 90"><rect x="8" y="5" width="104" height="80" rx="4" fill="#065f46" stroke="#10b981" stroke-width="1"/><path d="M14 52h28M50 30h6M14 46h26" stroke="#34d399" stroke-width=".7" opacity=".6"/><rect x="16" y="12" width="30" height="30" rx="2" fill="#94a3b8"/><rect x="22" y="18" width="18" height="18" fill="#cbd5e1"/><rect x="58" y="10" width="4" height="40" fill="#111827"/><rect x="65" y="10" width="4" height="40" fill="#111827"/><rect x="72" y="10" width="4" height="40" fill="#111827"/><rect x="79" y="10" width="4" height="40" fill="#111827"/><rect x="16" y="58" width="70" height="5" fill="#111827"/><rect x="16" y="71" width="70" height="5" fill="#111827"/><rect x="92" y="56" width="14" height="14" fill="#1f2937"/><circle cx="99" cy="78" r="4.5" fill="#cbd5e1"/><circle cx="52" cy="14" r="2.5" fill="#60a5fa"/><circle cx="52" cy="22" r="2.5" fill="#60a5fa"/><circle cx="52" cy="38" r="2.5" fill="#60a5fa"/><rect x="92" y="10" width="14" height="30" fill="#f8fafc" opacity=".85"/></svg>`,
+cpu:`<svg viewBox="0 0 120 90"><g stroke="#facc15" stroke-width="2"><path d="M40 10v6M48 10v6M56 10v6M64 10v6M72 10v6M80 10v6M40 74v6M48 74v6M56 74v6M64 74v6M72 74v6M80 74v6M24 26h6M24 34h6M24 42h6M24 50h6M24 58h6M24 66h6M90 26h6M90 34h6M90 42h6M90 50h6M90 58h6M90 66h6"/></g><rect x="30" y="15" width="60" height="60" rx="4" fill="#065f46"/><rect x="38" y="23" width="44" height="44" rx="3" fill="#cbd5e1"/><text x="60" y="49" text-anchor="middle" font-size="12" font-weight="800" fill="#334155" font-family="sans-serif">CPU</text><path d="M31 74 L39 74 L31 66Z" fill="#facc15"/></svg>`,
+ram:`<svg viewBox="0 0 120 90"><rect x="6" y="28" width="108" height="34" rx="2" fill="#047857"/><rect x="12" y="33" width="15" height="18" rx="1" fill="#111827"/><rect x="31" y="33" width="15" height="18" rx="1" fill="#111827"/><rect x="50" y="33" width="15" height="18" rx="1" fill="#111827"/><rect x="74" y="33" width="15" height="18" rx="1" fill="#111827"/><rect x="93" y="33" width="15" height="18" rx="1" fill="#111827"/><g fill="#facc15"><rect x="9" y="56" width="58" height="6"/><rect x="71" y="56" width="40" height="6"/></g><path d="M9 56v6M13 56v6M17 56v6M21 56v6M25 56v6M29 56v6M33 56v6M37 56v6M41 56v6M45 56v6M49 56v6M53 56v6M57 56v6M61 56v6M75 56v6M79 56v6M83 56v6M87 56v6M91 56v6M95 56v6M99 56v6M103 56v6M107 56v6" stroke="#b45309" stroke-width=".8"/><text x="68" y="76" font-size="7" fill="#94a3b8" font-family="sans-serif" text-anchor="middle">muesca</text></svg>`,
+cooler:`<svg viewBox="0 0 120 90"><rect x="20" y="7" width="80" height="78" rx="7" fill="#334155"/><circle cx="60" cy="46" r="33" fill="#1e293b"/><g class="fanblades"><g fill="#94a3b8"><path d="M60 46 C56 30 66 15 78 20 C76 32 70 40 60 46Z"/><path d="M60 46 C56 30 66 15 78 20 C76 32 70 40 60 46Z" transform="rotate(72 60 46)"/><path d="M60 46 C56 30 66 15 78 20 C76 32 70 40 60 46Z" transform="rotate(144 60 46)"/><path d="M60 46 C56 30 66 15 78 20 C76 32 70 40 60 46Z" transform="rotate(216 60 46)"/><path d="M60 46 C56 30 66 15 78 20 C76 32 70 40 60 46Z" transform="rotate(288 60 46)"/></g></g><circle cx="60" cy="46" r="8" fill="#475569"/><circle cx="27" cy="14" r="3" fill="#94a3b8"/><circle cx="93" cy="14" r="3" fill="#94a3b8"/><circle cx="27" cy="78" r="3" fill="#94a3b8"/><circle cx="93" cy="78" r="3" fill="#94a3b8"/></svg>`,
+gpu:`<svg viewBox="0 0 120 90"><rect x="6" y="18" width="108" height="48" rx="6" fill="#1f2937"/><rect x="6" y="18" width="108" height="4" rx="2" fill="#ef4444"/><circle cx="37" cy="43" r="17" fill="#0f172a" stroke="#475569"/><circle cx="85" cy="43" r="17" fill="#0f172a" stroke="#475569"/><g stroke="#94a3b8" stroke-width="3" stroke-linecap="round"><path d="M37 30v26M24 43h26M28 34l18 18M46 34L28 52"/><path d="M85 30v26M72 43h26M76 34l18 18M94 34L76 52"/></g><circle cx="37" cy="43" r="4" fill="#475569"/><circle cx="85" cy="43" r="4" fill="#475569"/><rect x="2" y="18" width="5" height="54" fill="#94a3b8"/><rect x="22" y="66" width="62" height="7" fill="#facc15"/><rect x="96" y="11" width="14" height="7" rx="1" fill="#111827"/></svg>`,
+storage:`<svg viewBox="0 0 120 90"><rect x="6" y="10" width="64" height="72" rx="5" fill="#94a3b8"/><circle cx="38" cy="40" r="23" fill="#e2e8f0"/><circle cx="38" cy="40" r="14" fill="none" stroke="#cbd5e1"/><circle cx="38" cy="40" r="4.5" fill="#64748b"/><path d="M60 74 L44 46" stroke="#334155" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="74" r="4" fill="#334155"/><text x="38" y="78" font-size="7" text-anchor="middle" fill="#1f2937" font-weight="700" font-family="sans-serif">HDD</text><rect x="76" y="32" width="38" height="16" rx="2" fill="#065f46"/><rect x="81" y="35" width="11" height="10" fill="#111827"/><rect x="95" y="35" width="11" height="10" fill="#111827"/><rect x="110" y="34" width="3" height="12" fill="#facc15"/><text x="95" y="60" font-size="7" text-anchor="middle" fill="#94a3b8" font-weight="700" font-family="sans-serif">SSD M.2</text></svg>`,
+psu:`<svg viewBox="0 0 120 90"><path d="M84 28 C100 28 100 46 116 46" stroke="#facc15" stroke-width="3.5" fill="none"/><path d="M84 36 C100 36 98 56 116 56" stroke="#ef4444" stroke-width="3.5" fill="none"/><path d="M84 44 C98 44 96 66 116 66" stroke="#f97316" stroke-width="3.5" fill="none"/><path d="M84 52 C96 52 96 76 116 76" stroke="#64748b" stroke-width="3.5" fill="none"/><rect x="8" y="12" width="78" height="66" rx="4" fill="#374151"/><circle cx="47" cy="45" r="25" fill="#1f2937" stroke="#6b7280" stroke-width="2"/><path d="M22 45h50M47 20v50M29 27l36 36M65 27L29 63" stroke="#6b7280" stroke-width="1.5"/><circle cx="47" cy="45" r="15" fill="none" stroke="#6b7280" stroke-width="1.2"/><path d="M14 16 l7 0 l-3.5 -6z" fill="#facc15" transform="translate(0 6)"/><text x="17.5" y="21.5" font-size="5" text-anchor="middle" fill="#111" font-weight="800">!</text></svg>`
+};
+
+/* ================= CONTENIDO ================= */
+const TOOLS = [
+ {id:'ph2',name:'Destornillador Phillips PH2',short:'Tornillos de gabinete, placa y discos.',use:'Es la herramienta más usada del taller: casi todos los tornillos de gabinetes, motherboards, fuentes y discos son tipo cruz (Phillips) de tamaño 2.',how:'Elegí la punta que calce justa en la cruz, presioná firme hacia abajo y girá sin "comer" la cabeza del tornillo. Una punta imantada ayuda a no perder tornillos dentro del gabinete.',warn:'Nunca hagas palanca sobre la placa: un resbalón puede cortar pistas. No apoyes la punta imantada sobre discos.'},
+ {id:'pulsera',name:'Pulsera antiestática',short:'Descarga la estática de tu cuerpo al chasis.',use:'Nuestro cuerpo acumula electricidad estática (ESD) al caminar o frotar la ropa. Una descarga que ni sentimos puede dañar chips de RAM, CPU o la placa.',how:'Ajustá la banda a la muñeca con el metal contra la piel y conectá la pinza cocodrilo a una parte metálica SIN pintar del gabinete.',warn:'Si no tenés pulsera, tocá seguido una parte metálica del gabinete. Nunca la uses trabajando con equipos enchufados.'},
+ {id:'multimetro',name:'Multímetro digital',short:'Mide voltajes, continuidad y resistencia.',use:'Permite verificar si la fuente entrega los voltajes correctos (+12 V, +5 V, +3,3 V), si un cable tiene continuidad o si la pila de la BIOS está agotada.',how:'Para fuentes y pilas usá la escala V⎓ (corriente continua). Punta negra en COM (tierra), punta roja en el punto a medir.',warn:'No midas la red de 220 V sin supervisión docente. Nunca uses la escala de resistencia (Ω) en un circuito con energía.'},
+ {id:'aire',name:'Aire comprimido',short:'Saca polvo de ventiladores y disipadores.',use:'El polvo funciona como una manta: tapa los disipadores, el equipo levanta temperatura y se pone lento o se apaga solo.',how:'Ráfagas cortas, con la lata derecha, a unos 10 cm. Sostené las aspas del ventilador con un dedo para que no giren.',warn:'Si dejás que el ventilador gire con el aire, actúa como generador y puede dañarse. Si inclinás la lata, larga líquido muy frío.'},
+ {id:'pasta',name:'Pasta térmica',short:'Mejora el paso de calor del CPU al disipador.',use:'Las superficies del CPU y del disipador tienen micro-imperfecciones llenas de aire, que conduce muy mal el calor. La pasta rellena esos huecos.',how:'Limpiá la pasta vieja con alcohol isopropílico. Aplicá una cantidad del tamaño de una arveja en el centro y colocá el disipador: la presión la reparte sola.',warn:'Más no es mejor: el exceso se derrama sobre el socket. Siempre que retires el disipador, renová la pasta.'},
+ {id:'precintos',name:'Precintos plásticos',short:'Ordenan el cableado interno.',use:'Un cableado prolijo mejora el flujo de aire y evita que un cable roce las aspas de un ventilador.',how:'Agrupá los cables que van hacia el mismo lado, ajustá sin estrangular y cortá el sobrante al ras con un alicate.',warn:'No ajustes de más los cables de datos ni pases precintos sobre partes que calientan.'},
+ {id:'alcohol',name:'Alcohol isopropílico',short:'Limpia contactos y pasta térmica vieja.',use:'Se evapora rápido, no deja residuos y no conduce electricidad: ideal para limpiar pasta térmica vieja, contactos de RAM y placas.',how:'Usalo con hisopo o paño que no suelte pelusa. Esperá a que se evapore por completo antes de volver a encender.',warn:'No uses alcohol común (tiene agua) ni agua. Es inflamable: lejos de llamas y calor.'},
+ {id:'linterna',name:'Linterna',short:'Ilumina los rincones del gabinete.',use:'Muchas fallas se ven: capacitores inflados, conectores quemados, pines doblados en el socket o polvo escondido.',how:'Iluminá en ángulo rasante sobre la placa: los capacitores abombados y los pines torcidos proyectan sombra y se detectan fácil.',warn:'La cámara del celular con zoom es una gran lupa para inspeccionar y para sacar fotos antes de desconectar.'}
+];
+
+const COMPS = [
+ {id:'motherboard',name:'Motherboard (placa madre)',func:'Interconecta todos los componentes del sistema',desc:'Es la placa principal: todos los componentes se conectan a ella mediante zócalos, ranuras y conectores. Tiene el socket del CPU, las ranuras de RAM y PCIe, los conectores SATA/M.2 y el chip de la BIOS.',tip:'Revisá capacitores inflados, olor a quemado y que los separadores (standoffs) coincidan con los agujeros de la placa.',fail:'Capacitores abombados, pila CMOS agotada, cortocircuito contra el chasis.'},
+ {id:'cpu',name:'Procesador (CPU)',func:'Ejecuta las instrucciones y realiza los cálculos',desc:'Es el "cerebro": ejecuta las instrucciones de los programas. Se ubica en el socket de la motherboard y siempre lleva un disipador encima.',tip:'Tomalo por los bordes. Respetá la marca del triángulo dorado para orientarlo y nunca lo fuerces. Revisá que no haya pines doblados.',fail:'Sobretemperatura por pasta seca o cooler sucio: la PC se apaga o reinicia sola.'},
+ {id:'ram',name:'Memoria RAM',func:'Memoria temporal y rápida que se borra al apagar',desc:'Guarda temporalmente los datos de los programas abiertos. Es muy rápida pero volátil: todo su contenido se pierde al apagar.',tip:'Abrí las trabas laterales y sacala derecha. Sostenela por los bordes sin tocar los contactos dorados. Respetá la muesca al insertarla.',fail:'Mal insertada o con contactos sucios: enciende coolers pero no da video (suele pitar).'},
+ {id:'cooler',name:'Cooler / disipador',func:'Extrae el calor que genera el procesador',desc:'El bloque de metal (aluminio o cobre) absorbe el calor del CPU y el ventilador lo expulsa con aire.',tip:'Al retirarlo, girá suavemente para despegar la pasta seca. Limpiá las aletas con aire comprimido sosteniendo las aspas.',fail:'Polvo acumulado o ventilador trabado: ruido fuerte y temperaturas altas.'},
+ {id:'gpu',name:'Placa de video (GPU)',func:'Genera la imagen que se ve en el monitor',desc:'Procesa los gráficos y envía la imagen al monitor. Va en la ranura PCIe x16 y muchas necesitan alimentación extra desde la fuente.',tip:'Para sacarla: quitá el tornillo de la chapa trasera y liberá la traba de la ranura PCIe antes de tirar.',fail:'Sin cable PCIe conectado, o monitor enchufado a la salida de la placa madre: no hay video.'},
+ {id:'storage',name:'Almacenamiento (SSD / HDD)',func:'Guarda archivos y sistema operativo en forma permanente',desc:'Guarda de forma permanente el sistema operativo y los archivos. El HDD tiene discos que giran; el SSD usa memoria flash, sin partes móviles, y es mucho más rápido.',tip:'El HDD es sensible a golpes: nunca lo muevas mientras gira. Usa cable SATA de datos + SATA de alimentación; los SSD M.2 van directo a la placa.',fail:'Un HDD que hace "clic-clic" está fallando: hay que copiar los datos cuanto antes.'},
+ {id:'psu',name:'Fuente de alimentación (PSU)',func:'Convierte los 220 V de alterna en voltajes de continua',desc:'Convierte los 220 V de corriente alterna de la red en corriente continua de +12 V, +5 V y +3,3 V para los componentes.',tip:'Solo se manipula desde sus conectores externos. NUNCA se abre su carcasa metálica: los capacitores guardan carga peligrosa.',fail:'Fuente muerta: no enciende nada, ni LEDs ni ventiladores.'}
+];
+const FUNC_ORDER = ['storage','cooler','motherboard','psu','ram','gpu','cpu'];
+
+const SAFETY = [
+ 'Calzado cerrado con suela de goma y sin ropa o accesorios sueltos',
+ 'Mesa limpia, despejada y sin líquidos ni comida cerca',
+ 'Buena iluminación y un recipiente para ordenar los tornillos',
+ 'Sé dónde están el disyuntor y el matafuegos del taller',
+ 'Pulsera antiestática lista (o toco el chasis metálico seguido)'
+];
+
+const MYTHS = [
+ {id:'m1',text:'Si apagué la PC con el botón, ya no hay ningún riesgo eléctrico adentro.',answer:false,exp:'Mientras siga enchufada, la fuente mantiene +5 V "standby" (cable violeta) y sus capacitores siguen cargados. Siempre hay que desenchufar.'},
+ {id:'m2',text:'La electricidad estática puede dañar una memoria RAM aunque no veamos chispa ni sintamos nada.',answer:true,exp:'Sentimos descargas desde unos 3.000 V, pero un chip puede dañarse con mucho menos. Por eso usamos pulsera antiestática.'},
+ {id:'m3',text:'Para limpiar la placa madre se puede usar un trapo húmedo con agua.',answer:false,exp:'El agua conduce y provoca cortocircuitos y corrosión. Se usa aire comprimido, pincel antiestático o alcohol isopropílico.'},
+ {id:'m4',text:'Antes de tocar componentes hay que descargarse tocando el metal del gabinete o usando la pulsera.',answer:true,exp:'Así igualamos nuestro potencial con el del chasis y evitamos que la descarga pase por los chips.'}
+];
+
+const WIRES = [
+ {c:'#facc15',n:'Amarillo',v:'+12 V',u:'Alimenta CPU, placa de video, motores de discos y ventiladores. Es el que más potencia lleva.'},
+ {c:'#ef4444',n:'Rojo',v:'+5 V',u:'Electrónica de discos, puertos USB y circuitos de la placa.'},
+ {c:'#f97316',n:'Naranja',v:'+3,3 V',u:'Memoria RAM, chipset y ranuras M.2.'},
+ {c:'#0b0b0b',n:'Negro',v:'0 V (GND)',u:'Tierra o retorno. En el multímetro, la punta negra va acá.'},
+ {c:'#a855f7',n:'Violeta',v:'+5 V standby',u:'Está activo aunque la PC esté "apagada" si sigue enchufada. ¡Por eso hay que desenchufar!'},
+ {c:'#22c55e',n:'Verde',v:'PS_ON',u:'Señal de encendido: cuando la placa la conecta a tierra, la fuente arranca.'},
+ {c:'#9ca3af',n:'Gris',v:'PWR_OK',u:'Le avisa a la placa que los voltajes ya son estables y puede arrancar.'}
+];
+
+const TOOL_QUIZ = [
+ {id:'t1',q:'¿Qué usás para descargar la electricidad estática de tu cuerpo antes de tocar componentes?',options:['Destornillador aislado','Pulsera antiestática conectada al chasis','Multímetro en escala de ohmios','Alcohol isopropílico'],correct:1,exp:'La pulsera conecta tu cuerpo al chasis y evita que una descarga ESD pase por los chips.'},
+ {id:'t2',q:'Querés comprobar si la fuente entrega 12 V en el cable amarillo. ¿Qué usás?',options:['Linterna','Pasta térmica','Multímetro en V⎓ (continua)','Aire comprimido'],correct:2,exp:'El multímetro en escala de tensión continua mide los voltajes de la fuente: punta negra a tierra (negro), roja al amarillo.'},
+ {id:'t3',q:'¿Con qué limpiás la pasta térmica vieja del procesador?',options:['Agua y detergente','Alcohol isopropílico y un hisopo','Aire comprimido','Un destornillador'],correct:1,exp:'El alcohol isopropílico disuelve la pasta, se evapora rápido y no deja residuos ni conduce electricidad.'},
+ {id:'t4',q:'El disipador está lleno de pelusa. ¿Qué herramienta usás y qué cuidado tenés?',options:['Aire comprimido, sosteniendo las aspas para que no giren','Aire comprimido, dejando que el ventilador gire rápido','Un trapo húmedo','Precintos'],correct:0,exp:'Si el ventilador gira por el aire actúa como generador y puede dañarse; por eso se sostienen las aspas.'}
+];
+
+const ORDER = [
+ {id:'o1',t:'Apagar el equipo y desenchufar el cable de 220 V'},
+ {id:'o2',t:'Mantener presionado el botón de encendido unos segundos para descargar energía residual'},
+ {id:'o3',t:'Colocarse la pulsera antiestática conectada al chasis'},
+ {id:'o4',t:'Sacar fotos de todas las conexiones antes de tocarlas'},
+ {id:'o5',t:'Quitar los tornillos y retirar la tapa lateral'},
+ {id:'o6',t:'Desconectar cables de alimentación (24 pines, 8 pines CPU, SATA) y de datos'},
+ {id:'o7',t:'Retirar la placa de video (tornillo + traba PCIe)'},
+ {id:'o8',t:'Retirar los módulos de RAM abriendo las trabas'}
+];
+
+const FINAL = [
+ {id:'f1',q:'¿Por qué hay que esperar unos minutos después de desenchufar la PC antes de trabajar?',options:['Para que se enfríe el monitor','Porque los capacitores retienen carga eléctrica','Para que se borre la RAM','Porque lo pide Windows'],correct:1,exp:'Los capacitores de la fuente almacenan energía y tardan en descargarse aun sin cable conectado.'},
+ {id:'f2',q:'En una fuente ATX, el cable amarillo lleva:',options:['+3,3 V','+5 V','+12 V','0 V (tierra)'],correct:2,exp:'Amarillo +12 V, rojo +5 V, naranja +3,3 V y negro tierra.'},
+ {id:'f3',q:'Encontrás capacitores con la parte de arriba inflada en la motherboard. Eso significa que:',options:['Es normal, así vienen de fábrica','Están dañados y son sospechosos principales de la falla','Les falta pasta térmica','Hay que apretarlos con la pinza'],correct:1,exp:'Un capacitor abombado o con pérdida está dañado y causa fallas de encendido o reinicios.'},
+ {id:'f4',q:'La PC enciende los coolers pero no da imagen. ¿Cuál es la primera prueba razonable?',options:['Cambiar el procesador','Formatear el disco','Sacar la RAM, limpiar sus contactos y volver a colocarla','Abrir la fuente'],correct:2,exp:'La RAM mal colocada o con contactos sucios es la causa más común de "enciende pero no da video". Además, verificá dónde está conectado el monitor.'},
+ {id:'f5',q:'¿Qué conviene hacer ANTES de desconectar los cables internos?',options:['Sacarles fotos','Cortarlos con alicate','Mojarlos para limpiarlos','Nada, se reconectan como sea'],correct:0,exp:'Las fotos son tu mapa para volver a armar todo exactamente igual.'},
+ {id:'f6',q:'La memoria RAM es volátil. Eso quiere decir que:',options:['Se evapora con el calor','Pierde su contenido al apagar el equipo','Es muy lenta','Guarda el sistema operativo para siempre'],correct:1,exp:'La RAM guarda datos solo mientras tiene energía; lo permanente va en el SSD o HDD.'},
+ {id:'f7',q:'¿Para qué sirven los separadores (standoffs) entre la motherboard y el gabinete?',options:['Para decorar','Para que la placa no toque el chasis metálico y no haya cortocircuito','Para enfriar la RAM','Para conectar el monitor'],correct:1,exp:'Elevan la placa: si las soldaduras tocaran el chasis, habría un cortocircuito.'},
+ {id:'f8',q:'¿Qué NO se debe hacer nunca con la fuente de alimentación?',options:['Medirla con el multímetro','Desenchufarla','Abrir su carcasa metálica','Limpiarle el polvo de la rejilla'],correct:2,exp:'Adentro hay capacitores con tensión peligrosa; solo la reparan técnicos en electrónica.'},
+ {id:'f9',q:'¿Cómo se toma correctamente un módulo de RAM?',options:['Por los contactos dorados','Por los bordes, sin tocar los contactos','Con la pinza del multímetro','Por los chips negros apretando fuerte'],correct:1,exp:'La grasa de los dedos ensucia los contactos y la estática puede dañar los chips.'},
+ {id:'f10',q:'Cada vez que la PC enciende, la fecha y la hora vuelven atrás. ¿Qué sospechás?',options:['Disco rígido roto','Pila CR2032 de la BIOS agotada','Falta pasta térmica','Placa de video quemada'],correct:1,exp:'La pila mantiene la hora y la configuración de la BIOS; con el multímetro debería medir cerca de 3 V.'}
+];
+
+const VISUAL = [
+ {t:'Polvo o pelusa acumulada en ventiladores y rejillas',w:'Provoca sobretemperatura: apagados, lentitud y ruido. → limpieza con aire comprimido.'},
+ {t:'Cables sueltos, pelados o mal enrutados',w:'Pueden causar falsos contactos o cortocircuitos, o trabar un ventilador. → reconectar y ordenar con precintos.'},
+ {t:'Capacitores inflados o con pérdida en la motherboard',w:'Componente dañado: causa fallas de encendido o reinicios. Es un sospechoso principal.'},
+ {t:'Tornillos faltantes o roscas dañadas',w:'Una pieza floja puede moverse y dañar conectores. Un tornillo suelto adentro puede hacer cortocircuito.'},
+ {t:'Humedad, óxido o corrosión',w:'Indica que el equipo estuvo en un lugar húmedo o se le volcó líquido: revisar contactos y conectores.'},
+ {t:'Olor a quemado o marcas de recalentamiento',w:'Señal de componente quemado. ¡No volver a encender hasta encontrar el origen!'}
+];
+
+const SYMPTOMS = {
+ 'No enciende nada (sin LEDs)':'Empezá por lo simple: ¿funcionan el cable de 220 V y la zapatilla? ¿El interruptor trasero de la fuente está en "I"? Revisá el cable del botón de encendido del panel frontal. Si todo está bien, la fuente es la principal sospechosa: medila con el multímetro.',
+ 'Enciende coolers pero no da video':'Clásico de RAM: sacala, limpiá los contactos con alcohol isopropílico y volvé a colocarla hasta escuchar el clic de las trabas. Verificá que el monitor esté conectado a la placa de video y no a la motherboard.',
+ 'Se reinicia solo en el logo':'Revisá temperaturas: cooler del CPU con polvo o pasta térmica seca. También puede ser una fuente que no entrega potencia estable.',
+ 'Pantalla azul aleatoria (BSOD)':'Las pantallas azules suelen venir de RAM defectuosa o disco con errores. Probá con un solo módulo de RAM por vez.',
+ 'Ruido extraño en disco o cooler':'Un HDD con "clics" está por fallar: prioridad, copiar los datos. Si el ruido es del cooler, puede ser polvo o un rodamiento gastado.',
+ 'Pierde la fecha y la hora':'La pila CR2032 de la BIOS está agotada: medila con el multímetro en V⎓, debería dar cerca de 3 V.'
+};
+const ADVICE = [
+ 'Ordená los tornillos por tamaño y por zona mientras desarmás: un recipiente con divisiones o una hoja con dibujos te salva al rearmar.',
+ 'Revisá que los separadores del gabinete coincidan exactamente con los agujeros de la motherboard para evitar cortocircuitos.',
+ 'Al retirar el disipador del procesador, giralo suavemente si la pasta térmica está seca: no tires derecho para arriba.',
+ 'Verificá que los cables del panel frontal (Power SW, Reset SW, LEDs) estén en los pines correctos: el manual de la placa tiene el mapa.',
+ 'Nunca fuerces un conector: todos tienen una sola posición posible gracias a sus trabas y muescas.',
+ 'Si encontrás capacitores abombados cerca del socket del CPU, ese es nuestro principal sospechoso.'
+];
+const PLAN_CHIPS = ['Limpieza con aire comprimido','Cambio de pasta térmica','Medir voltajes de la fuente','Limpiar contactos de la RAM','Reemplazar pila CR2032','Ordenar cableado con precintos','Backup de datos del disco'];
+
+/* ================= APP ================= */
+const KEY = 'tecnoclub_semana1_v2';
+const STEPS = ['Bienvenida','Seguridad','Fuente','Herramientas','Gabinete','Ficha','Check-up','Desarme','Evaluación','Reporte'];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle = a => { const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];} return b; };
+const compById = id => COMPS.find(c=>c.id===id);
+
+const app = {
+  s:null, lastXp:null, adviceIdx:-1, undoStack:[], color:'#10b981', eraser:false,
+
+  defaults(){
+    let order = shuffle(ORDER.map(o=>o.id));
+    if (order.every((id,i)=>id===ORDER[i].id)) order = order.reverse();
+    return {
+      step:1, safety:SAFETY.map(()=>false), myths:{}, discharged:false, psu:false, wiresSeen:[],
+      toolsSeen:[], toolQuiz:{}, compSeen:[], found:[], findTarget:null, mode:'explore',
+      matches:{}, matchChecked:false, matchReveal:false, pick:null,
+      patient:{name:'',brand:'',symptom:Object.keys(SYMPTOMS)[0],tech:'',group:'',owner:''}, patientSaved:false,
+      visual:VISUAL.map(()=>false), visualNotes:'', visualDone:false,
+      order, orderChecked:false,
+      rows:[{step:'1',component:'Tapa lateral izquierda',finding:'Retirada (2 tornillos Phillips). Polvo moderado.'},{step:'2',component:'Conector ATX 24 pines',finding:'Conexión firme, con polvo acumulado.'}],
+      plan:'', final:{}, canvas:null, canvasSaved:false
+    };
+  },
+  load(){
+    try{ const raw = localStorage.getItem(KEY); this.s = raw ? Object.assign(this.defaults(), JSON.parse(raw)) : this.defaults(); }
+    catch(e){ this.s = this.defaults(); }
+  },
+  save(){ try{ localStorage.setItem(KEY, JSON.stringify(this.s)); }catch(e){} },
+
+  init(){
+    this.load();
+    this.renderStepper();
+    this.renderSafety(); this.renderMyths();
+    this.renderCap(); this.renderWires(); document.getElementById('psuBox').checked = this.s.psu; this.markCheck('psuCheck', this.s.psu);
+    this.renderTools(); this.renderQuiz('toolQuiz', TOOL_QUIZ, 'toolQuiz');
+    this.renderCase(); this.renderMode(); this.renderComps(); this.renderMatch();
+    this.initCanvas();
+    this.renderPatient(); this.renderVisual();
+    this.renderMentor(); this.renderOrder(); this.renderRows(); this.renderPlan();
+    this.renderQuiz('finalQuiz', FINAL, 'final');
+    document.addEventListener('keydown', e => { if(e.key==='Escape') this.closeModal(); });
+    window.addEventListener('beforeprint', () => this.renderReport());
+    this.lastXp = null;
+    this.go(this.s.step || 1, true);
+  },
+
+  /* ---------- Navegación y XP ---------- */
+  go(n, silent){
+    if(n<1||n>10) return;
+    this.s.step = n; this.save();
+    document.querySelectorAll('.step').forEach(el => el.classList.toggle('hidden', +el.dataset.step !== n));
+    if(n===6) this.renderPatient();
+    if(n===8) this.renderMentor();
+    if(n===10){ this.renderResults(); this.renderReport(); }
+    this.refresh();
+    if(!silent) window.scrollTo({top:0, behavior:'smooth'});
+    const active = document.querySelector('.stepbtn.active'); if(active) active.scrollIntoView({block:'nearest', inline:'center'});
+  },
+  renderStepper(){
+    document.getElementById('stepper').innerHTML = STEPS.map((t,i)=>`<button class="stepbtn" data-n="${i+1}" onclick="app.go(${i+1})"><span class="n">${i+1}</span>${t}</button>`).join('');
+  },
+  stepDone(n){
+    const s=this.s;
+    switch(n){
+      case 1: return true;
+      case 2: return s.safety.every(Boolean) && MYTHS.every(m=>s.myths[m.id]!==undefined);
+      case 3: return s.discharged && s.psu;
+      case 4: return s.toolsSeen.length===TOOLS.length && TOOL_QUIZ.every(q=>s.toolQuiz[q.id]!==undefined);
+      case 5: return s.matchChecked && s.compSeen.length===COMPS.length;
+      case 6: return s.patientSaved;
+      case 7: return s.visualDone;
+      case 8: return s.orderChecked && s.plan.trim().length>20;
+      case 9: return FINAL.every(q=>s.final[q.id]!==undefined);
+      case 10: return [2,3,4,5,6,7,8,9].every(k=>this.stepDone(k));
+    }
+  },
+  xp(){
+    const s=this.s; let xp=0, max=0;
+    const add=(v,m)=>{xp+=v;max+=m;};
+    add(50,50);
+    add(s.safety.filter(Boolean).length*20, SAFETY.length*20);
+    add(MYTHS.filter(m=>s.myths[m.id]===m.answer).length*30, MYTHS.length*30);
+    add(s.discharged?50:0,50); add(s.psu?50:0,50);
+    add(s.wiresSeen.length*10, WIRES.length*10);
+    add(s.toolsSeen.length*10, TOOLS.length*10);
+    add(TOOL_QUIZ.filter(q=>s.toolQuiz[q.id]===q.correct).length*40, TOOL_QUIZ.length*40);
+    add(s.compSeen.length*10, COMPS.length*10);
+    add(s.found.length*15, COMPS.length*15);
+    add(s.matchChecked ? COMPS.filter(c=>s.matches[c.id]===c.id).length*20 : 0, COMPS.length*20);
+    add(s.canvasSaved?40:0,40);
+    add(s.patientSaved?50:0,50);
+    add(s.visualDone?60:0,60);
+    add(s.orderChecked ? s.order.filter((id,i)=>id===ORDER[i].id).length*15 : 0, ORDER.length*15);
+    add(Math.min(s.rows.filter(r=>r.component.trim()).length,8)*15, 120);
+    add(s.plan.trim().length>20?80:0,80);
+    add(FINAL.filter(q=>s.final[q.id]===q.correct).length*40, FINAL.length*40);
+    return {xp,max};
+  },
+  rank(p){ return p>=.85?'Maestro del Gabinete':p>=.6?'Técnico Senior':p>=.3?'Técnico Junior':'Novato de Taller'; },
+  refresh(){
+    const {xp,max} = this.xp();
+    document.getElementById('xp').textContent = xp+' XP';
+    document.getElementById('rank').textContent = this.rank(xp/max);
+    const done = [2,3,4,5,6,7,8,9].filter(n=>this.stepDone(n)).length;
+    document.getElementById('progressBar').style.width = (done/8*100)+'%';
+    document.querySelectorAll('.stepbtn').forEach(b=>{
+      const n=+b.dataset.n; b.classList.toggle('active', n===this.s.step); b.classList.toggle('done', n>1 && this.stepDone(n));
+    });
+    if(this.lastXp!==null && xp>this.lastXp) this.toast(`+${xp-this.lastXp} XP ⭐`);
+    this.lastXp = xp;
+  },
+  toast(msg){
+    const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+    clearTimeout(this._tt); this._tt=setTimeout(()=>t.classList.remove('show'),1800);
+  },
+  confetti(){
+    const cols=['#10b981','#facc15','#22d3ee','#f97316','#a855f7'];
+    for(let i=0;i<70;i++){
+      const c=document.createElement('div'); c.className='confetti';
+      c.style.left=Math.random()*100+'vw'; c.style.background=cols[i%cols.length];
+      c.style.animationDuration=(1.8+Math.random()*1.8)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+      document.body.appendChild(c); setTimeout(()=>c.remove(),4200);
+    }
+  },
+  markCheck(id,on){ const el=document.getElementById(id); if(el) el.classList.toggle('on',on); },
+
+  /* ---------- Paso 2 ---------- */
+  renderSafety(){
+    document.getElementById('safetyList').innerHTML = SAFETY.map((t,i)=>`<label class="check ${this.s.safety[i]?'on':''}"><input type="checkbox" ${this.s.safety[i]?'checked':''} onchange="app.toggleSafety(${i})"><span>${t}</span></label>`).join('');
+  },
+  toggleSafety(i){ this.s.safety[i]=!this.s.safety[i]; this.save(); this.renderSafety(); this.refresh(); if(this.s.safety.every(Boolean)) this.toast('🛡️ ¡Puesto de trabajo seguro!'); },
+  renderMyths(){
+    document.getElementById('mythList').innerHTML = MYTHS.map(m=>{
+      const a=this.s.myths[m.id], done=a!==undefined, ok=a===m.answer;
+      const b=(val,label)=>{ let cls='opt'; if(done){ if(val===m.answer) cls+=' correct'; else if(val===a) cls+=' wrong'; else cls+=' dim'; } return `<button class="${cls}" ${done?'disabled':''} onclick="app.answerMyth('${m.id}',${val})">${label}</button>`; };
+      return `<div class="myth"><p>${m.text}</p><div class="opts">${b(true,'✅ Realidad')}${b(false,'❌ Mito')}</div>${done?`<div class="fb ${ok?'ok':'bad'}">${ok?'✔ ¡Bien!':'✘ No.'} Es <b>${m.answer?'realidad':'mito'}</b>. ${m.exp}</div>`:''}</div>`;
+    }).join('') + `<div style="grid-column:1/-1"><button class="btn sm" onclick="app.resetMyths()">↺ Reintentar mitos</button></div>`;
+  },
+  answerMyth(id,v){ this.s.myths[id]=v; this.save(); this.renderMyths(); this.refresh(); },
+  resetMyths(){ this.s.myths={}; this.save(); this.renderMyths(); this.refresh(); },
+
+  /* ---------- Paso 3 ---------- */
+  renderCap(){
+    if(this.s.discharged){ this.setCap(0, 300, true); document.getElementById('capBtn').textContent='🔁 Repetir simulación'; }
+  },
+  setCap(v, sec, done){
+    document.getElementById('capV').textContent = Math.round(v)+' V';
+    document.getElementById('capV').style.color = v>50?'#f87171':v>5?'#fcd34d':'#34d399';
+    const f=document.getElementById('capFill'); f.style.width=(v/311*100)+'%'; f.classList.toggle('safe', v<=5);
+    const m=Math.floor(sec/60), s=Math.floor(sec%60);
+    document.getElementById('capT').textContent = m+':'+String(s).padStart(2,'0');
+    if(done) document.getElementById('capMsg').innerHTML='✅ <b>Capacitores descargados.</b> Ahora sí, con la pulsera puesta, se puede trabajar en el interior del gabinete (¡pero la fuente sigue cerrada!).';
+  },
+  discharge(){
+    if(this._capInt) return;
+    const btn=document.getElementById('capBtn'); btn.disabled=true;
+    document.getElementById('capMsg').textContent='Desenchufado. La carga baja de a poco a través de las resistencias internas... ¡todavía no toques!';
+    const total=8000, t0=performance.now();
+    this._capInt=setInterval(()=>{
+      const p=Math.min((performance.now()-t0)/total,1);
+      const v= p>=1 ? 0 : 311*Math.exp(-p*6);
+      this.setCap(v, p*300, p>=1);
+      if(p>=1){ clearInterval(this._capInt); this._capInt=null; btn.disabled=false; btn.textContent='🔁 Repetir simulación'; this.s.discharged=true; this.save(); this.refresh(); }
+    },80);
+  },
+  renderWires(){
+    document.getElementById('wires').innerHTML = WIRES.map((w,i)=>`<button class="wire ${this.s.wiresSeen.includes(i)?'on':''}" onclick="app.showWire(${i})"><i style="background:${w.c}"></i><b>${w.n}</b><span class="mono muted">${this.s.wiresSeen.includes(i)?w.v:'¿?'}</span></button>`).join('');
+  },
+  showWire(i){
+    const w=WIRES[i];
+    document.getElementById('wireDetail').innerHTML=`<h4 style="color:${w.c==='#0b0b0b'?'#cbd5e1':w.c}">Cable ${w.n} → ${w.v}</h4><p>${w.u}</p>`;
+    if(!this.s.wiresSeen.includes(i)){ this.s.wiresSeen.push(i); this.save(); this.refresh(); }
+    this.renderWires();
+  },
+  togglePsu(v){ this.s.psu=v; this.save(); this.markCheck('psuCheck',v); this.refresh(); },
+
+  /* ---------- Fichas (modal) ---------- */
+  itemCard(kind,it,seen){
+    return `<button class="item" onclick="app.openItem('${kind}','${it.id}')">${seen?'<span class="seen">✓ visto</span>':''}<div class="pic">${SVG[it.id]}</div><b>${it.name}</b><span>${kind==='tool'?it.short:it.func}</span></button>`;
+  },
+  renderTools(){
+    document.getElementById('toolsGrid').innerHTML = TOOLS.map(t=>this.itemCard('tool',t,this.s.toolsSeen.includes(t.id))).join('');
+    document.getElementById('toolsCount').textContent=`🧰 ${this.s.toolsSeen.length}/${TOOLS.length} vistas`;
+  },
+  renderComps(){
+    document.getElementById('compGrid').innerHTML = COMPS.map(c=>this.itemCard('comp',c,this.s.compSeen.includes(c.id))).join('');
+    document.getElementById('compCount').textContent=`🗺️ ${this.s.compSeen.length}/${COMPS.length} vistos`;
+  },
+  openItem(kind,id){
+    const list = kind==='tool'?TOOLS:COMPS, idx=list.findIndex(x=>x.id===id), it=list[idx];
+    const seenKey = kind==='tool'?'toolsSeen':'compSeen';
+    if(!this.s[seenKey].includes(id)){ this.s[seenKey].push(id); this.save(); this.refresh(); }
+    kind==='tool'?this.renderTools():this.renderComps();
+    let pic = SVG[id]; if(id==='cooler') pic = pic.replace('class="fanblades"','class="fanblades fan"');
+    if(id==='gpu') pic = pic.replace(/<g stroke="#94a3b8"/,'<g stroke="#94a3b8"');
+    const sections = kind==='tool'
+      ? `<div class="info"><h4>¿Para qué sirve?</h4><p>${it.use}</p></div><div class="info"><h4>¿Cómo se usa?</h4><p>${it.how}</p></div><div class="info w"><h4>⚠️ Precaución</h4><p>${it.warn}</p></div>`
+      : `<div class="info"><h4>¿Qué es?</h4><p>${it.desc}</p></div><div class="info"><h4>🔧 Tip de taller</h4><p>${it.tip}</p></div><div class="info w"><h4>🩺 Falla típica</h4><p>${it.fail}</p></div>`;
+    const prev=list[(idx-1+list.length)%list.length], next=list[(idx+1)%list.length];
+    document.getElementById('modalBody').innerHTML = `<div class="kicker">${kind==='tool'?'HERRAMIENTA':'COMPONENTE'} ${idx+1} DE ${list.length}</div><h2 style="margin:2px 40px 0 0;font-size:22px">${it.name}</h2><div class="bigpic">${pic}</div>${sections}<div class="nav" style="margin-top:12px"><button class="btn" onclick="app.openItem('${kind}','${prev.id}')">← ${prev.name.split(' (')[0]}</button><button class="btn primary" onclick="app.openItem('${kind}','${next.id}')">${next.name.split(' (')[0]} →</button></div>`;
+    document.getElementById('modal').classList.remove('hidden');
+    if(kind==='comp') this.flashCase(id,'found');
+  },
+  closeModal(){ document.getElementById('modal').classList.add('hidden'); },
+
+  /* ---------- Quizzes ---------- */
+  renderQuiz(boxId, qs, key){
+    const ans=this.s[key]; const L='ABCD';
+    const answered=qs.filter(q=>ans[q.id]!==undefined).length, correct=qs.filter(q=>ans[q.id]===q.correct).length;
+    let html = qs.map((q,i)=>{
+      const a=ans[q.id], done=a!==undefined, ok=a===q.correct;
+      return `<div class="q ${done?(ok?'ok':'bad'):''}"><div class="q-head"><span class="q-num">${i+1}</span><p>${q.q}</p></div><div class="opts">${q.options.map((o,j)=>{
+        let cls='opt'; if(done){ if(j===q.correct) cls+=' correct'; else if(j===a) cls+=' wrong'; else cls+=' dim'; }
+        return `<button class="${cls}" ${done?'disabled':''} onclick="app.answer('${boxId}','${key}','${q.id}',${j})"><b>${L[j]}</b>${o}</button>`; }).join('')}</div>${done?`<div class="fb ${ok?'ok':'bad'}">${ok?'✔ ¡Correcto!':'✘ Incorrecto. La correcta es la <b>'+L[q.correct]+'</b>.'} ${q.exp}</div>`:''}</div>`;
+    }).join('');
+    html += `<div class="scorebar"><span>Respondidas: <b>${answered}/${qs.length}</b> · Correctas: <b style="color:var(--acc2)">${correct}</b></span><button class="btn sm" onclick="app.resetQuiz('${boxId}','${key}')">↺ Reintentar ${key==='final'?'evaluación':'desafío'}</button></div>`;
+    document.getElementById(boxId).innerHTML = html;
+    if(key==='final') document.getElementById('finalCount').textContent = `📝 ${answered}/${qs.length}`;
+  },
+  answer(boxId,key,qid,j){
+    this.s[key][qid]=j; this.save();
+    const qs = key==='final'?FINAL:TOOL_QUIZ;
+    this.renderQuiz(boxId,qs,key); this.refresh();
+    if(qs.every(q=>this.s[key][q.id]===q.correct)) { this.confetti(); this.toast('🏆 ¡Puntaje perfecto!'); }
+  },
+  resetQuiz(boxId,key){ this.s[key]={}; this.save(); this.renderQuiz(boxId, key==='final'?FINAL:TOOL_QUIZ, key); this.refresh(); },
+
+  /* ---------- Gabinete ---------- */
+  renderCase(){
+    document.getElementById('caseHolder').innerHTML = `
+<svg class="casesvg" id="caseSvg" viewBox="0 0 400 470">
+  <rect x="10" y="10" width="380" height="450" rx="14" fill="#0b1220" stroke="#334155" stroke-width="4"/>
+  <g opacity=".5" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="352" cy="70" r="26"/><path d="M326 70h52M352 44v52"/></g>
+  <text x="352" y="112" font-size="9" fill="#64748b" text-anchor="middle">ventilador trasero</text>
+  <path d="M120 360 C120 330 270 340 280 300 M150 360 C150 345 300 335 300 120 M200 360 C210 320 300 300 320 290" stroke="#facc15" stroke-width="3" fill="none" opacity=".55"/>
+  <g class="hot" data-c="motherboard" onclick="app.caseClick('motherboard')">
+    <rect x="40" y="30" width="250" height="290" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+    <path d="M60 300h200M60 290h120M250 60v120M265 60v80" stroke="#34d399" stroke-width="1" opacity=".4"/>
+    <rect x="236" y="190" width="40" height="22" fill="#1f2937"/><circle cx="270" cy="290" r="9" fill="#cbd5e1"/>
+    <circle cx="70" cy="45" r="4" fill="#60a5fa"/><circle cx="82" cy="45" r="4" fill="#60a5fa"/><circle cx="185" cy="60" r="4" fill="#60a5fa"/>
+    <rect x="60" y="285" width="160" height="7" fill="#111827"/>
+    <text class="lbl" x="200" y="312" text-anchor="middle">Motherboard</text>
+  </g>
+  <g class="hot" data-c="gpu" onclick="app.caseClick('gpu')">
+    <rect x="45" y="222" width="240" height="46" rx="6" fill="#1f2937" stroke="#ef4444" stroke-width="1.5"/>
+    <circle cx="105" cy="245" r="17" fill="#0f172a" stroke="#475569"/><circle cx="185" cy="245" r="17" fill="#0f172a" stroke="#475569"/>
+    <path d="M105 230v30M90 245h30M185 230v30M170 245h30" stroke="#94a3b8" stroke-width="3"/>
+    <text class="lbl" x="250" y="250" text-anchor="middle">GPU</text>
+  </g>
+  <g class="hot" data-c="ram" onclick="app.caseClick('ram')">
+    <rect x="198" y="44" width="12" height="125" rx="1" fill="#047857" stroke="#34d399"/>
+    <rect x="216" y="44" width="12" height="125" rx="1" fill="#047857" stroke="#34d399"/>
+    <rect x="200" y="56" width="8" height="18" fill="#111827"/><rect x="200" y="84" width="8" height="18" fill="#111827"/><rect x="200" y="112" width="8" height="18" fill="#111827"/><rect x="200" y="140" width="8" height="18" fill="#111827"/>
+    <rect x="218" y="56" width="8" height="18" fill="#111827"/><rect x="218" y="84" width="8" height="18" fill="#111827"/><rect x="218" y="112" width="8" height="18" fill="#111827"/><rect x="218" y="140" width="8" height="18" fill="#111827"/>
+    <text class="lbl" x="213" y="186" text-anchor="middle">RAM</text>
+  </g>
+  <g class="hot" data-c="cooler" onclick="app.caseClick('cooler')">
+    <rect x="70" y="58" width="110" height="110" rx="10" fill="#334155"/>
+    <circle cx="125" cy="113" r="48" fill="#1e293b"/>
+    <g fill="#64748b"><path d="M125 113 C120 90 135 70 150 77 C147 94 138 105 125 113Z"/><path d="M125 113 C120 90 135 70 150 77 C147 94 138 105 125 113Z" transform="rotate(90 125 113)"/><path d="M125 113 C120 90 135 70 150 77 C147 94 138 105 125 113Z" transform="rotate(180 125 113)"/><path d="M125 113 C120 90 135 70 150 77 C147 94 138 105 125 113Z" transform="rotate(270 125 113)"/></g>
+    <text class="lbl" x="125" y="182" text-anchor="middle">Cooler</text>
+  </g>
+  <g class="hot" data-c="cpu" onclick="app.caseClick('cpu')">
+    <rect x="107" y="95" width="36" height="36" rx="3" fill="#cbd5e1" stroke="#facc15" stroke-width="2"/>
+    <text x="125" y="117" font-size="10" font-weight="800" text-anchor="middle" fill="#334155" pointer-events="none">CPU</text>
+  </g>
+  <g class="hot" data-c="storage" onclick="app.caseClick('storage')">
+    <rect x="305" y="245" width="72" height="46" rx="4" fill="#94a3b8"/><circle cx="330" cy="268" r="15" fill="#e2e8f0"/><circle cx="330" cy="268" r="3" fill="#64748b"/>
+    <rect x="305" y="300" width="72" height="30" rx="3" fill="#475569"/><text x="341" y="319" font-size="9" text-anchor="middle" fill="#e2e8f0" pointer-events="none">SSD</text>
+    <text class="lbl" x="341" y="345" text-anchor="middle">Discos</text>
+  </g>
+  <g class="hot" data-c="psu" onclick="app.caseClick('psu')">
+    <rect x="30" y="362" width="200" height="82" rx="6" fill="#374151" stroke="#6b7280"/>
+    <circle cx="90" cy="403" r="30" fill="#1f2937" stroke="#6b7280" stroke-width="2"/><path d="M60 403h60M90 373v60" stroke="#6b7280"/>
+    <path d="M160 385 l14 0 l-7 -12z" fill="#facc15"/>
+    <text class="lbl" x="170" y="420" text-anchor="middle">Fuente</text>
+  </g>
+</svg>`;
+    this.s.found.forEach(id=>this.flashCase(id,'found',true));
+  },
+  toggleLabels(on){ document.getElementById('caseSvg').classList.toggle('show-labels',on); },
+  flashCase(id,cls,keep){
+    const g=document.querySelector(`#caseSvg [data-c="${id}"]`); if(!g) return;
+    g.classList.remove('wrongflash'); void g.getBBox; g.classList.add(cls);
+    if(!keep && cls!=='found') setTimeout(()=>g.classList.remove(cls),600);
+    if(cls==='found' && !keep && !this.s.found.includes(id)) setTimeout(()=>g.classList.remove('found'),1200);
+  },
+  setMode(m){ this.s.mode=m; if(m==='find' && !this.s.findTarget) this.newTarget(); this.save(); this.renderMode(); },
+  newTarget(){
+    const left=COMPS.filter(c=>!this.s.found.includes(c.id));
+    this.s.findTarget = left.length ? left[Math.floor(Math.random()*left.length)].id : null;
+  },
+  renderMode(){
+    document.getElementById('modeExplore').classList.toggle('on',this.s.mode==='explore');
+    document.getElementById('modeFind').classList.toggle('on',this.s.mode==='find');
+    const p=document.getElementById('modePanel');
+    if(this.s.mode==='explore'){
+      p.innerHTML=`<div class="info"><h4>Modo explorar</h4><p>Tocá cualquier parte del gabinete para abrir su ficha con imagen, función, tip de taller y falla típica. Las fichas también están abajo.</p></div><div class="info w"><h4>👀 Ojo</h4><p>En la vida real el CPU está <b>debajo</b> del cooler. Acá lo ves con "rayos X".</p></div>`;
+    } else {
+      const t=this.s.findTarget ? compById(this.s.findTarget) : null;
+      p.innerHTML = t
+        ? `<div class="target"><span class="small muted">Encontrá en el gabinete:</span><div class="big">${t.name}</div><span class="small" id="findMsg">Pista: ${t.func.toLowerCase()}.</span></div><div class="scorebar"><span>Encontrados: <b>${this.s.found.length}/${COMPS.length}</b></span><button class="btn sm" onclick="app.resetFind()">↺ Reiniciar</button></div>`
+        : `<div class="target"><div class="big">🏆 ¡Encontraste los ${COMPS.length}!</div><span class="small">Ya conocés el mapa del gabinete.</span></div><button class="btn sm" onclick="app.resetFind()">↺ Jugar otra vez</button>`;
+    }
+  },
+  caseClick(id){
+    if(this.s.mode==='explore'){ this.openItem('comp',id); return; }
+    const t=this.s.findTarget; if(!t) return;
+    if(id===t){
+      this.s.found.push(id); this.flashCase(id,'found',true); this.newTarget(); this.save(); this.renderMode(); this.refresh();
+      if(!this.s.findTarget) this.confetti();
+    } else {
+      this.flashCase(id,'wrongflash');
+      const m=document.getElementById('findMsg'); if(m) m.innerHTML=`✘ Eso es <b>${compById(id).name}</b>. Seguí buscando…`;
+    }
+  },
+  resetFind(){ this.s.found=[]; document.querySelectorAll('#caseSvg .hot').forEach(g=>g.classList.remove('found')); this.newTarget(); this.save(); this.renderMode(); this.refresh(); },
+
+  /* ---------- Unir componentes ---------- */
+  renderMatch(){
+    const s=this.s, L='ABCDEFG', letterOf = fid => L[FUNC_ORDER.indexOf(fid)];
+    document.getElementById('matchLeft').innerHTML = `<div class="small muted" style="margin-bottom:6px">COMPONENTES</div>` + COMPS.map(c=>{
+      const m=s.matches[c.id]; let cls='mbtn'; if(s.pick===c.id) cls+=' pick';
+      if(s.matchChecked) cls += m===c.id?' ok':' bad';
+      const extra = s.matchChecked && m!==c.id && s.matchReveal ? `<small style="color:#a7f3d0">Correcta: ${letterOf(c.id)} — ${c.func}</small>` : '';
+      return `<button class="${cls}" ${s.matchChecked?'disabled':''} onclick="app.pickComp('${c.id}')">${SVG[c.id]}<span style="flex:1"><b>${c.name}</b>${extra}</span><span class="let ${m?'':'empty'}">${m?letterOf(m):'?'}</span></button>`;
+    }).join('');
+    const used = Object.values(s.matches);
+    document.getElementById('matchRight').innerHTML = `<div class="small muted" style="margin-bottom:6px">FUNCIONES</div>` + FUNC_ORDER.map((fid,i)=>`<button class="mbtn" ${s.matchChecked?'disabled':''} style="${used.includes(fid)?'opacity:.6':''}" onclick="app.pickFunc('${fid}')"><span class="let">${L[i]}</span><span>${compById(fid).func}</span></button>`).join('');
+    const n=Object.keys(s.matches).length, ok=COMPS.filter(c=>s.matches[c.id]===c.id).length;
+    document.getElementById('matchActions').innerHTML = s.matchChecked
+      ? `<div class="scorebar" style="flex:1"><span>Resultado: <b style="color:var(--acc2)">${ok}/${COMPS.length}</b> correctas</span><span class="row">${ok<COMPS.length?`<button class="btn sm soft" onclick="app.revealMatch()">${s.matchReveal?'Ocultar':'Ver'} respuestas correctas</button>`:''}<button class="btn sm" onclick="app.resetMatch()">↺ Reintentar</button></span></div>`
+      : `<button class="btn soft" ${n<COMPS.length?'disabled':''} onclick="app.checkMatch()">✔ Verificar (${n}/${COMPS.length})</button>${n?'<button class="btn sm" onclick="app.resetMatch()">Borrar uniones</button>':''}`;
+  },
+  pickComp(id){ this.s.pick = this.s.pick===id?null:id; this.renderMatch(); },
+  pickFunc(fid){
+    if(!this.s.pick){ this.toast('Primero tocá un componente de la izquierda'); return; }
+    for(const k in this.s.matches) if(this.s.matches[k]===fid) delete this.s.matches[k];
+    this.s.matches[this.s.pick]=fid; this.s.pick=null; this.save(); this.renderMatch();
+  },
+  checkMatch(){ this.s.matchChecked=true; this.save(); this.renderMatch(); this.refresh(); if(COMPS.every(c=>this.s.matches[c.id]===c.id)) this.confetti(); },
+  revealMatch(){ this.s.matchReveal=!this.s.matchReveal; this.save(); this.renderMatch(); },
+  resetMatch(){ this.s.matches={}; this.s.matchChecked=false; this.s.matchReveal=false; this.s.pick=null; this.save(); this.renderMatch(); this.refresh(); },
+
+  /* ---------- Lienzo ---------- */
+  initCanvas(){
+    const cv=document.getElementById('sketch'), ctx=cv.getContext('2d'); this.ctx=ctx; this.cv=cv;
+    this.fillBg();
+    if(this.s.canvas){ const img=new Image(); img.onload=()=>ctx.drawImage(img,0,0,cv.width,cv.height); img.src=this.s.canvas; }
+    const cols=['#10b981','#facc15','#ef4444','#f97316','#3b82f6','#e5e7eb'];
+    document.getElementById('swatches').innerHTML = cols.map(c=>`<span class="swatch ${c===this.color?'on':''}" style="background:${c}" onclick="app.setColor('${c}')"></span>`).join('');
+    let drawing=false;
+    const pos=e=>{ const r=cv.getBoundingClientRect(); const p=e.touches?e.touches[0]:e; return {x:(p.clientX-r.left)*cv.width/r.width, y:(p.clientY-r.top)*cv.height/r.height}; };
+    const start=e=>{ e.preventDefault(); drawing=true; this.pushUndo(); const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p.x+.1,p.y+.1); this.stroke(); };
+    const move=e=>{ if(!drawing) return; e.preventDefault(); const p=pos(e); ctx.lineTo(p.x,p.y); this.stroke(); };
+    const end=()=>{ if(!drawing) return; drawing=false; this.saveCanvas(); };
+    cv.addEventListener('mousedown',start); cv.addEventListener('mousemove',move); window.addEventListener('mouseup',end);
+    cv.addEventListener('touchstart',start,{passive:false}); cv.addEventListener('touchmove',move,{passive:false}); cv.addEventListener('touchend',end);
+  },
+  stroke(){ const c=this.ctx; c.strokeStyle=this.eraser?'#070a12':this.color; c.lineWidth=+document.getElementById('brush').value*(this.eraser?3:1); c.lineCap='round'; c.lineJoin='round'; c.stroke(); },
+  fillBg(){ this.ctx.fillStyle='#070a12'; this.ctx.fillRect(0,0,this.cv.width,this.cv.height); },
+  setColor(c){ this.color=c; this.eraser=false; document.getElementById('eraserBtn').classList.remove('soft'); document.querySelectorAll('.swatch').forEach(s=>s.classList.toggle('on', s.style.background && s.getAttribute('onclick').includes(c))); },
+  setEraser(){ this.eraser=!this.eraser; document.getElementById('eraserBtn').classList.toggle('soft',this.eraser); },
+  pushUndo(){ try{ this.undoStack.push(this.ctx.getImageData(0,0,this.cv.width,this.cv.height)); if(this.undoStack.length>20) this.undoStack.shift(); }catch(e){} },
+  undo(){ const d=this.undoStack.pop(); if(d){ this.ctx.putImageData(d,0,0); this.saveCanvas(); } },
+  clearCanvas(){ this.pushUndo(); this.fillBg(); this.saveCanvas(); },
+  drawTemplate(){
+    this.pushUndo(); const c=this.ctx; c.save(); c.setLineDash([8,6]); c.lineWidth=2; c.font='bold 15px Inter, sans-serif'; c.fillStyle='#475569'; c.strokeStyle='#334155';
+    const box=(x,y,w,h,t)=>{ c.strokeRect(x,y,w,h); c.fillText(t,x+8,y+20); };
+    box(40,20,500,300,'MOTHERBOARD'); box(110,50,120,120,'CPU + COOLER'); box(290,40,60,180,'RAM'); box(70,220,440,60,'GPU (PCIe x16)');
+    box(600,30,260,120,'DISCOS (SSD / HDD)'); box(600,230,260,130,'FUENTE (PSU)');
+    c.restore(); this.saveCanvas();
+  },
+  saveCanvas(){
+    try{ this.s.canvas=this.cv.toDataURL('image/jpeg',.8); this.s.canvasSaved=true; this.save(); this.refresh(); }catch(e){}
+  },
+
+  /* ---------- Ficha ---------- */
+  renderPatient(){
+    const sel=document.getElementById('pSymptom');
+    if(!sel.options.length) sel.innerHTML = Object.keys(SYMPTOMS).map(k=>`<option>${k}</option>`).join('');
+    const p=this.s.patient;
+    document.getElementById('pName').value=p.name; document.getElementById('pBrand').value=p.brand;
+    sel.value=p.symptom; document.getElementById('pTech').value=p.tech;
+    document.getElementById('pGroup').value=p.group||''; document.getElementById('pOwner').value=p.owner||'';
+    document.getElementById('pSaved').textContent = this.s.patientSaved?'✓ Ficha guardada':'';
+  },
+  savePatient(){
+    const v=id=>document.getElementById(id).value.trim();
+    this.s.patient={name:v('pName'),brand:v('pBrand'),symptom:document.getElementById('pSymptom').value,tech:v('pTech'),group:v('pGroup'),owner:v('pOwner')};
+    if(!this.s.patient.tech){ this.toast('Escribí tu nombre como técnico/a a cargo'); return; }
+    this.s.patientSaved=true; this.save(); this.renderPatient(); this.refresh(); this.toast('💾 Ficha guardada');
+  },
+
+  /* ---------- Check-up ---------- */
+  renderVisual(){
+    document.getElementById('visualList').innerHTML = VISUAL.map((v,i)=>`<div><label class="check ${this.s.visual[i]?'on':''}"><input type="checkbox" ${this.s.visual[i]?'checked':''} onchange="app.toggleVisual(${i})"><span style="flex:1">${v.t}</span><button class="btn sm" onclick="event.preventDefault();app.whyVisual(${i})">💡</button></label><div class="info hidden" id="vw${i}" style="margin:6px 0 0 32px"><p class="small">${v.w}</p></div></div>`).join('');
+    const n=document.getElementById('visualNotes'); n.value=this.s.visualNotes; n.oninput=e=>{ this.s.visualNotes=e.target.value; this.save(); };
+    document.getElementById('visualMsg').textContent = this.s.visualDone?'✓ Inspección registrada':'';
+  },
+  toggleVisual(i){ this.s.visual[i]=!this.s.visual[i]; this.save(); this.renderVisual(); },
+  whyVisual(i){ document.getElementById('vw'+i).classList.toggle('hidden'); },
+  finishVisual(){ this.s.visualDone=true; this.save(); this.renderVisual(); this.refresh(); },
+
+  /* ---------- Desarme ---------- */
+  renderMentor(){
+    const sym=this.s.patient.symptom;
+    document.getElementById('mentorTxt').innerHTML = this.adviceIdx<0
+      ? `Para el síntoma <b>"${esc(sym)}"</b>: ${SYMPTOMS[sym]||ADVICE[0]}`
+      : ADVICE[this.adviceIdx];
+  },
+  nextAdvice(){ this.adviceIdx=(this.adviceIdx+1)%ADVICE.length; this.renderMentor(); },
+  renderOrder(){
+    const s=this.s;
+    document.getElementById('orderList').innerHTML = s.order.map((id,i)=>{
+      const o=ORDER.find(x=>x.id===id), right=ORDER[i].id===id, should=ORDER.findIndex(x=>x.id===id)+1;
+      const cls = s.orderChecked ? (right?'ok':'bad') : '';
+      return `<div class="ord ${cls}"><span class="num">${i+1}</span><span class="txt">${o.t}${s.orderChecked&&!right?`<br><span class="should">Va en el paso ${should}</span>`:''}</span>${s.orderChecked?'':`<span class="arrows"><button onclick="app.moveOrder(${i},-1)" ${i===0?'disabled':''}>▲</button><button onclick="app.moveOrder(${i},1)" ${i===s.order.length-1?'disabled':''}>▼</button></span>`}</div>`;
+    }).join('');
+    const ok=s.order.filter((id,i)=>id===ORDER[i].id).length;
+    document.getElementById('orderActions').innerHTML = s.orderChecked
+      ? `<div class="scorebar" style="flex:1"><span>Pasos en su lugar: <b style="color:var(--acc2)">${ok}/${ORDER.length}</b></span><button class="btn sm" onclick="app.resetOrder()">↺ Mezclar y reintentar</button></div>`
+      : `<button class="btn soft" onclick="app.checkOrder()">✔ Verificar orden</button>`;
+  },
+  moveOrder(i,d){ const o=this.s.order, j=i+d; if(j<0||j>=o.length) return; [o[i],o[j]]=[o[j],o[i]]; this.save(); this.renderOrder(); },
+  checkOrder(){ this.s.orderChecked=true; this.save(); this.renderOrder(); this.refresh(); if(this.s.order.every((id,i)=>id===ORDER[i].id)) this.confetti(); },
+  resetOrder(){ const d=this.defaults(); this.s.order=d.order; this.s.orderChecked=false; this.save(); this.renderOrder(); this.refresh(); },
+  renderRows(){
+    document.getElementById('logBody').innerHTML = this.s.rows.map((r,i)=>`<tr><td><input value="${esc(r.step)}" oninput="app.updRow(${i},'step',this.value)"></td><td><input value="${esc(r.component)}" placeholder="Ej: Memoria RAM" oninput="app.updRow(${i},'component',this.value)"></td><td><input value="${esc(r.finding)}" placeholder="Ej: Contactos sucios" oninput="app.updRow(${i},'finding',this.value)"></td><td><button class="btn sm danger" onclick="app.delRow(${i})" aria-label="Borrar">🗑</button></td></tr>`).join('');
+  },
+  addRow(){ this.s.rows.push({step:String(this.s.rows.length+1),component:'',finding:''}); this.save(); this.renderRows(); },
+  updRow(i,f,v){ this.s.rows[i][f]=v; this.save(); clearTimeout(this._rt); this._rt=setTimeout(()=>this.refresh(),500); },
+  delRow(i){ this.s.rows.splice(i,1); this.save(); this.renderRows(); this.refresh(); },
+  renderPlan(){
+    const t=document.getElementById('plan'); t.value=this.s.plan;
+    t.oninput=e=>{ this.s.plan=e.target.value; this.save(); clearTimeout(this._pt); this._pt=setTimeout(()=>this.refresh(),500); };
+    document.getElementById('planChips').innerHTML = '<span class="small muted">Agregar rápido:</span>' + PLAN_CHIPS.map(c=>`<button class="btn sm" onclick="app.addChip('${c}')">＋ ${c}</button>`).join('');
+  },
+  addChip(c){ const p=this.s.plan.trim(); this.s.plan = p ? p.replace(/\.?$/,'')+'. '+c+'.' : c+'.'; this.save(); this.renderPlan(); this.refresh(); },
+
+  /* ---------- Resultados y reporte ---------- */
+  scores(){
+    const s=this.s;
+    return [
+      {n:'Mito o realidad', ok:MYTHS.filter(m=>s.myths[m.id]===m.answer).length, t:MYTHS.length},
+      {n:'Quiz herramientas', ok:TOOL_QUIZ.filter(q=>s.toolQuiz[q.id]===q.correct).length, t:TOOL_QUIZ.length},
+      {n:'Unir componentes', ok:COMPS.filter(c=>s.matches[c.id]===c.id).length, t:COMPS.length},
+      {n:'Orden de desarme', ok:s.orderChecked?s.order.filter((id,i)=>id===ORDER[i].id).length:0, t:ORDER.length},
+      {n:'Evaluación final', ok:FINAL.filter(q=>s.final[q.id]===q.correct).length, t:FINAL.length}
+    ];
+  },
+  renderResults(){
+    const sc=this.scores(), ok=sc.reduce((a,b)=>a+b.ok,0), tot=sc.reduce((a,b)=>a+b.t,0), {xp,max}=this.xp(), nota=Math.round(ok/tot*100);
+    document.getElementById('finalSub').textContent = `${this.rank(xp/max)} · ${xp} XP de ${max} posibles · ${nota}% de respuestas correctas`;
+    document.getElementById('finalTitle').textContent = nota>=80?'¡Operación de rescate exitosa!':nota>=50?'¡Buen trabajo, técnico/a!':'¡Misión en curso! Repasá y volvé a intentar';
+    document.getElementById('results').innerHTML = sc.map(x=>`<div class="resc"><span>${x.n}</span><b>${x.ok}/${x.t}</b><div class="meter"><div style="width:${x.ok/x.t*100}%"></div></div></div>`).join('') + `<div class="resc" style="border-color:rgba(16,185,129,.5)"><span>Nota global</span><b style="color:var(--acc2)">${nota}%</b><div class="meter"><div style="width:${nota}%"></div></div></div>`;
+  },
+  reportHTML(){
+    const s=this.s, p=s.patient, L='ABCD', sc=this.scores(), ok=sc.reduce((a,b)=>a+b.ok,0), tot=sc.reduce((a,b)=>a+b.t,0), {xp,max}=this.xp();
+    const date=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
+    const qBlock=(qs,ans)=>qs.map((q,i)=>{
+      const a=ans[q.id], has=a!==undefined, good=a===q.correct;
+      return `<div class="rq ${has?(good?'ok':'bad'):''}"><div class="qq">${i+1}. ${q.q}</div><div class="you">Tu respuesta: ${has?`<span class="${good?'good':'no'}">${L[a]}) ${q.options[a]} ${good?'✔':'✘'}</span>`:'<i>Sin responder</i>'}</div><div class="good">Respuesta correcta: ${L[q.correct]}) ${q.options[q.correct]}</div><div class="exp">${q.exp}</div></div>`;
+    }).join('');
+    const myths=MYTHS.map((m,i)=>{ const a=s.myths[m.id], has=a!==undefined, good=a===m.answer;
+      return `<div class="rq ${has?(good?'ok':'bad'):''}"><div class="qq">${i+1}. ${m.text}</div><div class="you">Tu respuesta: ${has?`<span class="${good?'good':'no'}">${a?'Realidad':'Mito'} ${good?'✔':'✘'}</span>`:'<i>Sin responder</i>'}</div><div class="good">Correcto: ${m.answer?'REALIDAD':'MITO'}</div><div class="exp">${m.exp}</div></div>`; }).join('');
+    const match=`<table><tr><th>Componente</th><th>Tu unión</th><th>Función correcta</th></tr>${COMPS.map(c=>{const m=s.matches[c.id]; return `<tr><td><b>${c.name}</b></td><td class="${m===c.id?'good':'no'}">${m?compById(m).func+(m===c.id?' ✔':' ✘'):'—'}</td><td class="good">${c.func}</td></tr>`;}).join('')}</table>`;
+    const order=`<table><tr><th>#</th><th>Tu orden</th><th>Orden correcto</th></tr>${ORDER.map((o,i)=>{const mine=ORDER.find(x=>x.id===s.order[i]); const good=s.orderChecked&&s.order[i]===o.id; return `<tr><td>${i+1}</td><td class="${s.orderChecked?(good?'good':'no'):''}">${s.orderChecked?mine.t+(good?' ✔':' ✘'):'<i>No verificado</i>'}</td><td class="good">${o.t}</td></tr>`;}).join('')}</table>`;
+    const rows=s.rows.filter(r=>r.component||r.finding);
+    const vis=VISUAL.filter((v,i)=>s.visual[i]);
+    const glossary=(list,kind)=>`<div class="gl">${list.map(it=>`<div class="gli"><div class="gp">${SVG[it.id]}</div><div><b>${it.name}</b><span>${kind==='tool'?it.use+' <b>Precaución:</b> '+it.warn:it.desc+' <b>Función:</b> '+it.func+'.'}</span></div></div>`).join('')}</div>`;
+    return `
+<div class="rhead"><div><h1>REPORTE TÉCNICO — TECNOCLUB TUCUMÁN</h1><div>Semana 1: El Taller y el Gabinete · ${date}</div></div><div class="stamp">${esc(this.rank(xp/max)).toUpperCase()}<br>${xp} / ${max} XP</div></div>
+<h2>1. Datos del técnico y del equipo</h2>
+<div class="kv"><div><b>Técnico/a:</b> ${esc(p.tech)||'—'}</div><div><b>Curso / grupo:</b> ${esc(p.group)||'—'}</div><div><b>Equipo:</b> ${esc(p.name)||'—'}</div><div><b>Gabinete:</b> ${esc(p.brand)||'—'}</div><div><b>Síntoma:</b> ${esc(p.symptom)}</div><div><b>Dueño:</b> ${esc(p.owner)||'—'}</div></div>
+<h2>2. Resumen de resultados</h2>
+<div class="score">${sc.map(x=>`<div>${x.n}<b>${x.ok}/${x.t}</b></div>`).join('')}<div>Nota global<b>${Math.round(ok/tot*100)}%</b></div></div>
+<h2>3. Protocolo de seguridad</h2>
+<table><tr><th>Ítem</th><th style="width:90px">Estado</th></tr>${SAFETY.map((t,i)=>`<tr><td>${t}</td><td class="${s.safety[i]?'good':'no'}">${s.safety[i]?'✔ Cumplido':'✘ Pendiente'}</td></tr>`).join('')}<tr><td>Simulación de descarga de capacitores</td><td class="${s.discharged?'good':'no'}">${s.discharged?'✔ Hecha':'✘ Pendiente'}</td></tr><tr><td>Juramento de la fuente (no abrir su carcasa)</td><td class="${s.psu?'good':'no'}">${s.psu?'✔ Aceptado':'✘ Pendiente'}</td></tr></table>
+<h2>4. ¿Mito o realidad? — respuestas correctas</h2>${myths}
+<h2>5. Colores de cables de la fuente (referencia)</h2>
+<table><tr><th>Color</th><th>Tensión</th><th>Uso</th></tr>${WIRES.map(w=>`<tr><td><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${w.c};border:1px solid #999;vertical-align:middle"></span> ${w.n}</td><td><b>${w.v}</b></td><td>${w.u}</td></tr>`).join('')}</table>
+<h2>6. Quiz de herramientas — respuestas correctas</h2>${qBlock(TOOL_QUIZ,s.toolQuiz)}
+<h2>7. Unir componente con su función</h2>${match}
+<h2>8. Check-up visual</h2>
+${vis.length?`<table><tr><th>Hallazgo observado</th><th>Qué significa</th></tr>${vis.map(v=>`<tr><td>${v.t}</td><td>${v.w}</td></tr>`).join('')}</table>`:'<p>No se marcaron hallazgos.</p>'}
+${s.visualNotes?`<p><b>Observaciones:</b> ${esc(s.visualNotes)}</p>`:''}
+<h2>9. Orden de desarme</h2>${order}
+<h2>10. Bitácora de desarme</h2>
+${rows.length?`<table><tr><th style="width:50px">Paso</th><th>Componente</th><th>Hallazgo</th></tr>${rows.map(r=>`<tr><td>${esc(r.step)}</td><td>${esc(r.component)}</td><td>${esc(r.finding)}</td></tr>`).join('')}</table>`:'<p>Sin registros.</p>'}
+<p><b>Consejo del Mentor para "${esc(p.symptom)}":</b> ${SYMPTOMS[p.symptom]||''}</p>
+<h2>11. Plan de rescate</h2><p style="border:1px solid #d1d5db;border-radius:6px;padding:8px;font-style:italic">${esc(s.plan)||'Sin plan detallado.'}</p>
+${s.canvas?`<h2>12. Esquema dibujado</h2><img class="canvasimg" src="${s.canvas}" alt="Esquema del técnico">`:''}
+<h2 class="pb">13. Evaluación final — respuestas correctas</h2>${qBlock(FINAL,s.final)}
+<h2>14. Guía de estudio: herramientas</h2>${glossary(TOOLS,'tool')}
+<h2>15. Guía de estudio: componentes</h2>${glossary(COMPS,'comp')}
+<div class="sign"><div>Firma del técnico/a</div><div>Firma del docente</div></div>
+<div class="foot">TecnoClub Tucumán — Formación técnica práctica · Reporte generado el ${date}</div>`;
+  },
+  renderReport(){ const h=this.reportHTML(); document.getElementById('reportPreview').innerHTML=h; document.getElementById('printReport').innerHTML=h; },
+  printReport(){ this.renderReport(); setTimeout(()=>window.print(),100); },
+  resetAll(){
+    if(!confirm('¿Reiniciar toda la misión? Se borran tus respuestas, la ficha y el dibujo.')) return;
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    location.reload();
+  }
+};
+
+window.addEventListener('DOMContentLoaded', () => app.init());
+</script>
+</body>
+</html>
